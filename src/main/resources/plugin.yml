@@ -1,5 +1,5 @@
-name: Sample
+name: StatisticsNotifire
 version: @version@
-main: com.tklcraft.sample.SamplePlugin
-api-version: '1.13'
+main: com.tklcraft.StatisticsNotifier
+api-version: '1.16'
 author: kanakiyo314

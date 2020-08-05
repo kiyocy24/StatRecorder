@@ -2,9 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/SamplePlugin.iml" filepath="$PROJECT_DIR$/.idea/SamplePlugin.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/SamplePlugin.main.iml" filepath="$PROJECT_DIR$/.idea/modules/SamplePlugin.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/SamplePlugin.test.iml" filepath="$PROJECT_DIR$/.idea/modules/SamplePlugin.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/StatisticsNotifier.iml" filepath="$PROJECT_DIR$/.idea/modules/StatisticsNotifier.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/StatisticsNotifier.main.iml" filepath="$PROJECT_DIR$/.idea/modules/StatisticsNotifier.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/StatisticsNotifier.test.iml" filepath="$PROJECT_DIR$/.idea/modules/StatisticsNotifier.test.iml" />
     </modules>
   </component>
 </project>
