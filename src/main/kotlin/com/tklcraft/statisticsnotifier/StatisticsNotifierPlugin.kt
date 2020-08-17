@@ -1,4 +1,4 @@
-package com.tklcraft.sample
+package com.tklcraft.statisticsnotifier
 
 import org.bukkit.plugin.java.JavaPlugin
 
