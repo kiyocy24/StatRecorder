@@ -10,6 +10,9 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.tkl-craft.StatisticsNotifier.iml" filepath="$PROJECT_DIR$/.idea/modules/com.tkl-craft.StatisticsNotifier.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.tkl-craft.StatisticsNotifier.main.iml" filepath="$PROJECT_DIR$/.idea/modules/com.tkl-craft.StatisticsNotifier.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.tkl-craft.StatisticsNotifier.test.iml" filepath="$PROJECT_DIR$/.idea/modules/com.tkl-craft.StatisticsNotifier.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/kiyocy24.StatisticsNotifier.iml" filepath="$PROJECT_DIR$/.idea/modules/kiyocy24.StatisticsNotifier.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/kiyocy24.StatisticsNotifier.main.iml" filepath="$PROJECT_DIR$/.idea/modules/kiyocy24.StatisticsNotifier.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/kiyocy24.StatisticsNotifier.test.iml" filepath="$PROJECT_DIR$/.idea/modules/kiyocy24.StatisticsNotifier.test.iml" />
     </modules>
   </component>
 </project>
