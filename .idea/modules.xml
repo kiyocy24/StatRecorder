@@ -7,6 +7,9 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/StatisticsNotifier.iml" filepath="$PROJECT_DIR$/.idea/modules/StatisticsNotifier.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/StatisticsNotifier.main.iml" filepath="$PROJECT_DIR$/.idea/modules/StatisticsNotifier.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/StatisticsNotifier.test.iml" filepath="$PROJECT_DIR$/.idea/modules/StatisticsNotifier.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.tkl-craft.StatisticsNotifier.iml" filepath="$PROJECT_DIR$/.idea/modules/com.tkl-craft.StatisticsNotifier.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.tkl-craft.StatisticsNotifier.main.iml" filepath="$PROJECT_DIR$/.idea/modules/com.tkl-craft.StatisticsNotifier.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.tkl-craft.StatisticsNotifier.test.iml" filepath="$PROJECT_DIR$/.idea/modules/com.tkl-craft.StatisticsNotifier.test.iml" />
     </modules>
   </component>
 </project>

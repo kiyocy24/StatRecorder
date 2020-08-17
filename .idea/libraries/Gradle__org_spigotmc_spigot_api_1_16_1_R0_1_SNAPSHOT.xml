@@ -2,10 +2,12 @@
   <library name="Gradle: org.spigotmc:spigot-api:1.16.1-R0.1-SNAPSHOT">
     <CLASSES>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.spigotmc/spigot-api/1.16.1-R0.1-SNAPSHOT/105eb71c4f6eda0e34a71f885197aa1b8dec03b0/spigot-api-1.16.1-R0.1-SNAPSHOT.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.spigotmc/spigot-api/1.16.1-R0.1-SNAPSHOT/aa2d6155d8ad4d1043caf358bef8ef342106a2ac/spigot-api-1.16.1-R0.1-SNAPSHOT.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.spigotmc/spigot-api/1.16.1-R0.1-SNAPSHOT/480a2ccdb236baf89171132469667b41b8c37c41/spigot-api-1.16.1-R0.1-SNAPSHOT-sources.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.spigotmc/spigot-api/1.16.1-R0.1-SNAPSHOT/bb3ad9f434489f701a7df13299276ae1dd07cd12/spigot-api-1.16.1-R0.1-SNAPSHOT-sources.jar!/" />
     </SOURCES>
   </library>
 </component>
