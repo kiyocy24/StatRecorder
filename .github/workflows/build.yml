@@ -14,7 +14,11 @@ jobs:
       with:
         java-version: 1.8
     - name: Install gradle
-      run: sudo apt-get install gradle
+      run: |
+        sudo add-apt-repository ppa:cwchien/gradle
+        sudo apt-get update
+        sudo apt-get install gradle
+        gradle -v
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
     - name: Build with Gradle
