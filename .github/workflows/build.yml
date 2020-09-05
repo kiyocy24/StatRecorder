@@ -13,7 +13,7 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 1.8
-    - name: Install gradle
+    - name: Install Gradle
       run: |
         sudo add-apt-repository ppa:cwchien/gradle
         sudo apt-get update
