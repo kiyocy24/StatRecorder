@@ -1,5 +1,5 @@
 name: StatisticsNotifier
 version: @version@
-main: com.tklcraft.StatisticsNotifierPlugin
+main: com.kiyocy24.statisticsnotifier.StatisticsNotifierPlugin
 api-version: '1.16'
 author: kiyocy24
