@@ -17,8 +17,6 @@ CREATE TABLE `statistic_logs` (
   `item_used` int unsigned NOT NULL,
   `item_picked_up` int unsigned NOT NULL,
   `item_dropped` int unsigned NOT NULL,
-  `entity_killed` int unsigned NOT NULL,
-  `entity_killed_by` int unsigned NOT NULL,
   `created_at` timestamp NOT NULL,
   `updated_at` timestamp NOT NULL
 );
