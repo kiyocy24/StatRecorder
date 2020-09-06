@@ -2,11 +2,11 @@ package com.kiyocy24.statisticsnotifier.listener
 
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
-import org.bukkit.event.player.PlayerLoginEvent
+import org.bukkit.event.player.PlayerQuitEvent
 
-object LoginListener : Listener {
+object QuitListener : Listener {
     @EventHandler
-    fun onPlayerLoginEvent(e: PlayerLoginEvent) {
+    fun onPlayerQuitEvent(e: PlayerQuitEvent) {
         // Date login log
     }
 }
