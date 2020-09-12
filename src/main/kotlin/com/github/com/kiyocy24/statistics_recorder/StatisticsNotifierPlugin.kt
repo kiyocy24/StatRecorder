@@ -1,14 +1,12 @@
-package com.kiyocy24.statisticsnotifier
+package com.github.com.kiyocy24.statistics_recorder
 
-import com.kiyocy24.statisticsnotifier.listener.LoginListener
-import com.kiyocy24.statisticsnotifier.listener.QuitListener
+import com.github.com.kiyocy24.statistics_recorder.listener.LoginListener
+import com.github.com.kiyocy24.statistics_recorder.listener.QuitListener
 import org.bukkit.plugin.java.JavaPlugin
 
 class StatisticsNotifierPlugin : JavaPlugin() {
 
     override fun onEnable() {
-        // Plugin startup logic
-
         // Save default config
         saveDefaultConfig()
 

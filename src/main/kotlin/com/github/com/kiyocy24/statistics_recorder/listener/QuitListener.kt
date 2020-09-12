@@ -1,4 +1,4 @@
-package com.kiyocy24.statisticsnotifier.listener
+package com.github.com.kiyocy24.statistics_recorder.listener
 
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
