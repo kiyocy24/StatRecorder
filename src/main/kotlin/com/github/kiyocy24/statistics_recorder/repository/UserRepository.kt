@@ -1,8 +1,8 @@
-package com.github.com.kiyocy24.statistics_recorder.repository
+package com.github.kiyocy24.statistics_recorder.repository
 
-import com.github.com.kiyocy24.statistics_recorder.entity.db.User as dbUser
-import com.github.com.kiyocy24.statistics_recorder.entity.view.User as vUser
-import com.github.com.kiyocy24.statistics_recorder.infrastructure.Database
+import com.github.kiyocy24.statistics_recorder.entity.db.User as dbUser
+import com.github.kiyocy24.statistics_recorder.entity.view.User as vUser
+import com.github.kiyocy24.statistics_recorder.infrastructure.Database
 import java.sql.Connection
 
 class UserRepository() {

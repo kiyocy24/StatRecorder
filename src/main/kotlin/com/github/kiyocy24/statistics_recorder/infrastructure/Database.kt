@@ -1,6 +1,6 @@
-package com.github.com.kiyocy24.statistics_recorder.infrastructure
+package com.github.kiyocy24.statistics_recorder.infrastructure
 
-import com.github.com.kiyocy24.statistics_recorder.entity.db.User as dbUser
+import com.github.kiyocy24.statistics_recorder.entity.db.User as dbUser
 import java.sql.Connection
 import java.sql.SQLException
 

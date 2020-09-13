@@ -1,6 +1,6 @@
-package com.github.com.kiyocy24.statistics_recorder.entity.view
+package com.github.kiyocy24.statistics_recorder.entity.view
 
-import com.github.com.kiyocy24.statistics_recorder.entity.db.INVALID_USER_ID
+import com.github.kiyocy24.statistics_recorder.entity.db.INVALID_USER_ID
 import java.sql.Timestamp
 
 class User(

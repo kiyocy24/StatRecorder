@@ -1,4 +1,4 @@
-package com.github.com.kiyocy24.statistics_recorder.entity.view
+package com.github.kiyocy24.statistics_recorder.entity.view
 
 class StatisticLog(
         val userId: Int,

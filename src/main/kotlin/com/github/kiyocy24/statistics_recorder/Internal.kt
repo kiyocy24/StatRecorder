@@ -1,12 +1,12 @@
-package com.github.com.kiyocy24.statistics_recorder
+package com.github.kiyocy24.statistics_recorder
 
 import org.bukkit.Bukkit.getPluginManager
 import java.sql.*
 
-val pluginInstance : StatisticsNotifierPlugin by lazy {
-    val instance = getPluginManager().getPlugin("StatisticsNotifier")
+val pluginInstance : StatisticsRecorderPlugin by lazy {
+    val instance = getPluginManager().getPlugin("StatisticsRecorder")
     requireNotNull(instance) { warning("Plugin instance is null.") }
-    return@lazy instance as StatisticsNotifierPlugin
+    return@lazy instance as StatisticsRecorderPlugin
 }
 internal fun info(message : String) = pluginInstance.logger.info(message)
 internal fun warning(message : String) = pluginInstance.logger.warning(message)

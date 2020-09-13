@@ -1,4 +1,4 @@
-package com.github.com.kiyocy24.statistics_recorder.listener
+package com.github.kiyocy24.statistics_recorder.listener
 
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
