@@ -3,6 +3,7 @@ package com.github.kiyocy24.statistics_recorder
 import com.github.kiyocy24.statistics_recorder.infrastructure.Database
 import com.github.kiyocy24.statistics_recorder.listener.LoginListener
 import com.github.kiyocy24.statistics_recorder.listener.QuitListener
+import com.github.kiyocy24.statistics_recorder.repository.DatabaseRepository
 import org.bukkit.plugin.java.JavaPlugin
 
 class StatisticsRecorderPlugin : JavaPlugin() {
@@ -13,7 +14,7 @@ class StatisticsRecorderPlugin : JavaPlugin() {
         info("Save config.yml")
 
         // Setup database
-        Database(mysqlConn).create()
+        DatabaseRepository(mysqlConn).create()
         info("Setup database")
 
         // Set listener

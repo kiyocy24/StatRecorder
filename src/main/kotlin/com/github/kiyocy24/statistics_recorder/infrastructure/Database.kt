@@ -1,11 +1,10 @@
 package com.github.kiyocy24.statistics_recorder.infrastructure
 
-import com.github.kiyocy24.statistics_recorder.entity.db.ItemLog
 import com.github.kiyocy24.statistics_recorder.warning
 import com.github.kiyocy24.statistics_recorder.entity.db.User as dbUser
+import com.github.kiyocy24.statistics_recorder.entity.db.ItemLog as dbItemLog
 import java.sql.Connection
 import java.sql.SQLException
-import kotlin.math.log
 
 class Database(private val conn: Connection) {
     fun create() {
@@ -73,25 +72,25 @@ class Database(private val conn: Connection) {
         }
     }
 
-    inner class Item {
-        fun multiInsert(logs: List<ItemLog>) {
+    inner class ItemLog {
+        fun multiInsert(itemLogs: List<dbItemLog>) {
             try {
                 var sql =  "INSERT INTO item_logs (user_id, item_name, block_mined, item_broken, item_crafted, item_used, item_picked_up, item_dropped) VALUES "
-                for (i in 0..logs.size) {
+                for (i in 0..itemLogs.size) {
                     sql += "(?, ?, ?, ?, ?, ?, ?, ?, ?),"
                 }
                 sql.substring(sql.length - 1)
 
                 val pstmt = conn.prepareStatement(sql)
-                for (i in 0..logs.size) {
-                    pstmt.setInt(i+1, logs[i].userId)
-                    pstmt.setString(i+2, logs[i].name)
-                    pstmt.setInt(i+3, logs[i].blockMined)
-                    pstmt.setInt(i+4, logs[i].itemBroken)
-                    pstmt.setInt(i+5, logs[i].itemCrafted)
-                    pstmt.setInt(i+6, logs[i].itemUsed)
-                    pstmt.setInt(i+7, logs[i].itemPickedUp)
-                    pstmt.setInt(i+8, logs[i].itemDropped)
+                for (i in 0..itemLogs.size) {
+                    pstmt.setInt(i+1, itemLogs[i].userId)
+                    pstmt.setString(i+2, itemLogs[i].name)
+                    pstmt.setInt(i+3, itemLogs[i].blockMined)
+                    pstmt.setInt(i+4, itemLogs[i].itemBroken)
+                    pstmt.setInt(i+5, itemLogs[i].itemCrafted)
+                    pstmt.setInt(i+6, itemLogs[i].itemUsed)
+                    pstmt.setInt(i+7, itemLogs[i].itemPickedUp)
+                    pstmt.setInt(i+8, itemLogs[i].itemDropped)
                 }
                 pstmt.executeUpdate()
                 pstmt.close()
