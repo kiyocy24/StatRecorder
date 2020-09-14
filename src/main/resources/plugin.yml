@@ -1,5 +1,5 @@
-name: StatisticsNotifier
+name: StatisticsRecorder
 version: @version@
-main: com.github.com.kiyocy24.statistics_recorder
+main: com.github.kiyocy24.statistics_recorder.StatisticsRecorderPlugin
 api-version: '1.16'
 author: kiyocy24
