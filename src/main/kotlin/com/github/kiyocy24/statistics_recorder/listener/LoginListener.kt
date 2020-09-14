@@ -12,17 +12,18 @@ import java.sql.Timestamp
 object LoginListener : Listener {
     @EventHandler
     fun onPlayerLoginEvent(e: PlayerLoginEvent) {
-        val user = UserRepository().searchByUuid(mysqlConn, e.player.uniqueId.toString())
+        val user = UserRepository(mysqlConn).searchByUuid(e.player.uniqueId.toString())
         val newUser = User(
                 uuid = e.player.uniqueId.toString(),
                 name = e.player.name,
                 lastLogin = Timestamp(System.currentTimeMillis())
         )
         if (user.id == INVALID_USER_ID) {
-            UserRepository().insert(mysqlConn, newUser)
+            UserRepository(mysqlConn).insert(newUser)
         }
         else {
-            UserRepository().update(mysqlConn, newUser)
+            UserRepository(mysqlConn).
+            update(newUser)
         }
     }
 }

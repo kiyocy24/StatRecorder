@@ -8,22 +8,26 @@ val pluginInstance : StatisticsRecorderPlugin by lazy {
     requireNotNull(instance) { warning("Plugin instance is null.") }
     return@lazy instance as StatisticsRecorderPlugin
 }
-internal fun info(message : String) = pluginInstance.logger.info(message)
-internal fun warning(message : String) = pluginInstance.logger.warning(message)
+internal fun info(message : String?) = pluginInstance.logger.info(message)
+internal fun warning(message : String?) = pluginInstance.logger.warning(message)
 
 val mysqlConn : Connection by lazy {
     pluginInstance.saveDefaultConfig()
     val host = pluginInstance.config.getString("mysql.host")
     val port = pluginInstance.config.getInt("mysql.port")
-    val database = pluginInstance.config.getString("database")
-    val  username = pluginInstance.config.getString("mysql.username")
+    val database = pluginInstance.config.getString("mysql.database")
+    val username = pluginInstance.config.getString("mysql.username")
     val password = pluginInstance.config.getString("mysql.password")
 
-    val conn = DriverManager.getConnection(
-            "jdbc:mysql://$host:$port/$database",
-            username,
-            password
-    )
+    val conn = try {
+        DriverManager.getConnection(
+                "jdbc:mysql://$host:$port/$database?autoReconnect=true&useSSL=false",
+                username,
+                password
+        )
+    } catch (e: SQLException) {
+        warning(e.message)
+    }
     requireNotNull(conn) { warning("Database connection failed.") }
     return@lazy conn as Connection
 }
