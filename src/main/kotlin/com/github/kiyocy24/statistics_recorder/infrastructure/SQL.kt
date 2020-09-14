@@ -11,8 +11,8 @@ CREATE TABLE IF NOT EXISTS `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 """
 
-const val CREATE_STATISTICS_LOGS = """
-CREATE TABLE IF NOT EXISTS `statistics_logs` (
+const val CREATE_ITEM_LOGS = """
+CREATE TABLE IF NOT EXISTS `item_logs` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
   `user_id` int NOT NULL,
   `item_name` varchar(255) NOT NULL,

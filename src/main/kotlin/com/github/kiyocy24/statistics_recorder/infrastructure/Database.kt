@@ -9,7 +9,7 @@ class Database(private val conn: Connection) {
     fun create() {
         try {
             conn.prepareStatement(CREATE_USERS).executeUpdate()
-            conn.prepareStatement(CREATE_STATISTICS_LOGS).executeUpdate()
+            conn.prepareStatement(CREATE_ITEM_LOGS).executeUpdate()
         } catch (e: SQLException) {
             warning(e.message)
         }
