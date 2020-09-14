@@ -2,11 +2,9 @@ package com.github.kiyocy24.statistics_recorder.entity.db
 
 import java.sql.Timestamp
 
-const val INVALID_ITEM_LOG = 0
-
 class ItemLog(
-        val id: Int = INVALID_ITEM_LOG,
-        val userId: Int = INVALID_USER_ID,
+        val id: Int = 0,
+        val userId: Int = 0,
         val name: String = "",
         val blockMined: Int = 0,
         val itemBroken: Int = 0,

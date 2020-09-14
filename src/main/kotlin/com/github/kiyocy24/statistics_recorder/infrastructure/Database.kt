@@ -74,7 +74,7 @@ class Database(private val conn: Connection) {
     }
 
     inner class Item {
-        fun insert(userId: Int, logs: List<ItemLog>) {
+        fun multiInsert(logs: List<ItemLog>) {
             try {
                 var sql =  "INSERT INTO item_logs (user_id, item_name, block_mined, item_broken, item_crafted, item_used, item_picked_up, item_dropped) VALUES "
                 for (i in 0..logs.size) {
@@ -90,8 +90,8 @@ class Database(private val conn: Connection) {
                     pstmt.setInt(i+4, logs[i].itemBroken)
                     pstmt.setInt(i+5, logs[i].itemCrafted)
                     pstmt.setInt(i+6, logs[i].itemUsed)
-                    pstmt.setInt(i+7, logs[i].itemUsed)
-                    pstmt.setInt(i+8, logs[i].itemPickedUp)
+                    pstmt.setInt(i+7, logs[i].itemPickedUp)
+                    pstmt.setInt(i+8, logs[i].itemDropped)
                 }
                 pstmt.executeUpdate()
                 pstmt.close()

@@ -1,12 +1,13 @@
 package com.github.kiyocy24.statistics_recorder.entity.view
 
-class StatisticLog(
-        val userId: Int,
-        val itemName: String,
-        val blockMined: Long,
-        val itemBroken: Long,
-        val itemCreated: Long,
-        val itemUsed: Long,
-        val itemPickedUp: Long,
-        val itemDropped: Long
+class ItemLog(
+        val id: Int = 0,
+        val userId: Int = 0,
+        val name: String = "",
+        val blockMined: Int = 0,
+        val itemBroken: Int = 0,
+        val itemCrafted: Int = 0,
+        val itemUsed: Int = 0,
+        val itemPickedUp: Int = 0,
+        val itemDropped: Int = 0
 ) {}

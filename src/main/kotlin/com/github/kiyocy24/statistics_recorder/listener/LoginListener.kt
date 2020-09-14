@@ -1,6 +1,5 @@
 package com.github.kiyocy24.statistics_recorder.listener
 
-import com.github.kiyocy24.statistics_recorder.entity.db.INVALID_USER_ID
 import com.github.kiyocy24.statistics_recorder.entity.view.User
 import com.github.kiyocy24.statistics_recorder.mysqlConn
 import com.github.kiyocy24.statistics_recorder.repository.UserRepository
@@ -18,7 +17,7 @@ object LoginListener : Listener {
                 name = e.player.name,
                 lastLogin = Timestamp(System.currentTimeMillis())
         )
-        if (user.id == INVALID_USER_ID) {
+        if (user.id == 0) {
             UserRepository(mysqlConn).insert(newUser)
         }
         else {
