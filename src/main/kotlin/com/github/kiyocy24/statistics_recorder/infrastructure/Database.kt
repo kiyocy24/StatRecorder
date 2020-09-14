@@ -1,9 +1,11 @@
 package com.github.kiyocy24.statistics_recorder.infrastructure
 
+import com.github.kiyocy24.statistics_recorder.entity.db.ItemLog
 import com.github.kiyocy24.statistics_recorder.warning
 import com.github.kiyocy24.statistics_recorder.entity.db.User as dbUser
 import java.sql.Connection
 import java.sql.SQLException
+import kotlin.math.log
 
 class Database(private val conn: Connection) {
     fun create() {
@@ -16,7 +18,7 @@ class Database(private val conn: Connection) {
     }
 
     inner class User {
-        fun searchByUuid(uuid: String) : dbUser {
+        fun searchByUuid(uuid: String): dbUser {
             var user = dbUser()
             try {
                 val sql = "SELECT * from users WHERE uuid=?"
@@ -66,10 +68,34 @@ class Database(private val conn: Connection) {
                 pstmt.executeUpdate()
                 pstmt.close()
             } catch (e: SQLException) {
-                e.stackTrace
-                warning(u.name)
-                warning(u.uuid)
-                warning(u.lastLogin.toString())
+                warning(e.message)
+            }
+        }
+    }
+
+    inner class Item {
+        fun insert(userId: Int, logs: List<ItemLog>) {
+            try {
+                var sql =  "INSERT INTO item_logs (user_id, item_name, block_mined, item_broken, item_crafted, item_used, item_picked_up, item_dropped) VALUES "
+                for (i in 0..logs.size) {
+                    sql += "(?, ?, ?, ?, ?, ?, ?, ?, ?),"
+                }
+                sql.substring(sql.length - 1)
+
+                val pstmt = conn.prepareStatement(sql)
+                for (i in 0..logs.size) {
+                    pstmt.setInt(i+1, logs[i].userId)
+                    pstmt.setString(i+2, logs[i].name)
+                    pstmt.setInt(i+3, logs[i].blockMined)
+                    pstmt.setInt(i+4, logs[i].itemBroken)
+                    pstmt.setInt(i+5, logs[i].itemCrafted)
+                    pstmt.setInt(i+6, logs[i].itemUsed)
+                    pstmt.setInt(i+7, logs[i].itemUsed)
+                    pstmt.setInt(i+8, logs[i].itemPickedUp)
+                }
+                pstmt.executeUpdate()
+                pstmt.close()
+            } catch (e: SQLException) {
                 warning(e.message)
             }
         }
