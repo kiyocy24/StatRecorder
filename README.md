@@ -13,7 +13,6 @@ Right now, only the statistics are stored for items, but in the future it will b
 - mysql
 
 # How to set up
-## 
 1. Mysql setting
     1. Install mysql
     2. Create a database and user for this plugin (Database name and user name can be decided freely)
