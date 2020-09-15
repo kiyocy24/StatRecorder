@@ -1,7 +1,9 @@
 package com.github.kiyocy24.statistics_recorder.infrastructure
 
+import com.github.kiyocy24.statistics_recorder.info
 import com.github.kiyocy24.statistics_recorder.warning
 import com.github.kiyocy24.statistics_recorder.entity.db.User as dbUser
+import com.github.kiyocy24.statistics_recorder.entity.db.ItemLog as dbItemLog
 import java.sql.Connection
 import java.sql.SQLException
 
@@ -9,14 +11,14 @@ class Database(private val conn: Connection) {
     fun create() {
         try {
             conn.prepareStatement(CREATE_USERS).executeUpdate()
-            conn.prepareStatement(CREATE_STATISTICS_LOGS).executeUpdate()
+            conn.prepareStatement(CREATE_ITEM_LOGS).executeUpdate()
         } catch (e: SQLException) {
             warning(e.message)
         }
     }
 
     inner class User {
-        fun searchByUuid(uuid: String) : dbUser {
+        fun searchByUuid(uuid: String): dbUser {
             var user = dbUser()
             try {
                 val sql = "SELECT * from users WHERE uuid=?"
@@ -66,10 +68,34 @@ class Database(private val conn: Connection) {
                 pstmt.executeUpdate()
                 pstmt.close()
             } catch (e: SQLException) {
-                e.stackTrace
-                warning(u.name)
-                warning(u.uuid)
-                warning(u.lastLogin.toString())
+                warning(e.message)
+            }
+        }
+    }
+
+    inner class ItemLog {
+        fun multiInsert(itemLogs: List<dbItemLog>) {
+            try {
+                var sql =  "INSERT INTO item_logs (user_id, item_name, block_mined, item_broken, item_crafted, item_used, item_picked_up, item_dropped) VALUES "
+                for (i in itemLogs.indices) {
+                    sql += "(?, ?, ?, ?, ?, ?, ?, ?),"
+                }
+                sql = sql.removeSuffix(",")
+                info("Item log size: ${itemLogs.size}")
+                val pstmt = conn.prepareStatement(sql)
+                for (i in itemLogs.indices) {
+                    pstmt.setInt(i*8+1, itemLogs[i].userId)
+                    pstmt.setString(i*8+2, itemLogs[i].name)
+                    pstmt.setInt(i*8+3, itemLogs[i].blockMined)
+                    pstmt.setInt(i*8+4, itemLogs[i].itemBroken)
+                    pstmt.setInt(i*8+5, itemLogs[i].itemCrafted)
+                    pstmt.setInt(i*8+6, itemLogs[i].itemUsed)
+                    pstmt.setInt(i*8+7, itemLogs[i].itemPickedUp)
+                    pstmt.setInt(i*8+8, itemLogs[i].itemDropped)
+                }
+                pstmt.executeUpdate()
+                pstmt.close()
+            } catch (e: SQLException) {
                 warning(e.message)
             }
         }
