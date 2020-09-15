@@ -19,7 +19,7 @@ Right now, only the statistics are stored for items, but in the future it will b
         ```bash:mysql
        CREATE DATABASE statistics_recorder;
        CREATE USER minecraft@localhost IDENTIFIED BY 'password';
-       GRANT CREATE ON statistics_recorder.* TO minecraft@localhost;
+       GRANT ALL ON statistics_recorder.* TO minecraft@localhost;
         ``` 
 2. Place this plugin int `plugins` folder of your Minecraft server directory and start Minecraft server.
 3. Set up each item in the `config.yml` file
