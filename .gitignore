@@ -58,3 +58,6 @@ out/
 .settings/
 .classpath
 .project
+
+# Enviroment
+.env
