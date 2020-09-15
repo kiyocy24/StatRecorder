@@ -1,6 +1,5 @@
 package com.github.kiyocy24.statistics_recorder
 
-import com.github.kiyocy24.statistics_recorder.infrastructure.Database
 import com.github.kiyocy24.statistics_recorder.listener.LoginListener
 import com.github.kiyocy24.statistics_recorder.listener.QuitListener
 import com.github.kiyocy24.statistics_recorder.repository.DatabaseRepository

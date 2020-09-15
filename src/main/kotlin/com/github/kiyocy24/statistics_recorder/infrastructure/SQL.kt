@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS `item_logs` (
   `item_name` varchar(255) NOT NULL,
   `block_mined` int NOT NULL,
   `item_broken` int NOT NULL,
-  `item_created` int NOT NULL,
+  `item_crafted` int NOT NULL,
   `item_used` int NOT NULL,
   `item_picked_up` int NOT NULL,
   `item_dropped` int NOT NULL,

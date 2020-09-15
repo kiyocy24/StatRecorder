@@ -16,7 +16,7 @@ class ItemLogRepository(private val conn: Connection) {
                     blockMined = vItemLog.blockMined,
                     itemBroken = vItemLog.itemBroken,
                     itemCrafted = vItemLog.itemCrafted,
-                    itemUsed = vItemLog.itemCrafted,
+                    itemUsed = vItemLog.itemUsed,
                     itemPickedUp = vItemLog.itemPickedUp,
                     itemDropped = vItemLog.itemDropped
             ))
