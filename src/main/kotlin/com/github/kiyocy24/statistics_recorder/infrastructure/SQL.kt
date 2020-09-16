@@ -15,6 +15,8 @@ const val CREATE_ITEM_LOGS = """
 CREATE TABLE IF NOT EXISTS `item_logs` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
   `user_id` int NOT NULL,
+  `user_login_num` int NOT NULL,
+  `item_id` int NOT NULL,
   `item_name` varchar(255) NOT NULL,
   `block_mined` int NOT NULL,
   `item_broken` int NOT NULL,

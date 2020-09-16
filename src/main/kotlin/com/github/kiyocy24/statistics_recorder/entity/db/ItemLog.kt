@@ -5,6 +5,8 @@ import java.sql.Timestamp
 class ItemLog(
         val id: Int = 0,
         val userId: Int = 0,
+        val userLoginNum: Int = 0,
+        val itemId: Int = 0,
         val name: String = "",
         val blockMined: Int = 0,
         val itemBroken: Int = 0,
