@@ -4,9 +4,9 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/SamplePlugin.main.iml" filepath="$PROJECT_DIR$/.idea/modules/SamplePlugin.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/SamplePlugin.test.iml" filepath="$PROJECT_DIR$/.idea/modules/SamplePlugin.test.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/StatisticsRecorder.iml" filepath="$PROJECT_DIR$/.idea/modules/StatisticsRecorder.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/StatisticsRecorder.main.iml" filepath="$PROJECT_DIR$/.idea/modules/StatisticsRecorder.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/StatisticsRecorder.test.iml" filepath="$PROJECT_DIR$/.idea/modules/StatisticsRecorder.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/StatRecorder.iml" filepath="$PROJECT_DIR$/.idea/modules/StatRecorder.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/StatRecorder.main.iml" filepath="$PROJECT_DIR$/.idea/modules/StatRecorder.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/StatRecorder.test.iml" filepath="$PROJECT_DIR$/.idea/modules/StatRecorder.test.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.tkl-craft.StatisticsNotifier.iml" filepath="$PROJECT_DIR$/.idea/modules/com.tkl-craft.StatisticsNotifier.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.tkl-craft.StatisticsNotifier.main.iml" filepath="$PROJECT_DIR$/.idea/modules/com.tkl-craft.StatisticsNotifier.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.tkl-craft.StatisticsNotifier.test.iml" filepath="$PROJECT_DIR$/.idea/modules/com.tkl-craft.StatisticsNotifier.test.iml" />

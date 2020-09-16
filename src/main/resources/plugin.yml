@@ -1,5 +1,5 @@
-name: StatisticsRecorder
+name: StatRecorder
 version: @version@
-main: com.github.kiyocy24.statistics_recorder.StatisticsRecorderPlugin
+main: com.github.kiyocy24.stat_recorder.StatRecorderPlugin
 api-version: '1.16'
 author: kiyocy24

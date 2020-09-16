@@ -1,11 +1,11 @@
-package com.github.kiyocy24.statistics_recorder
+package com.github.kiyocy24.stat_recorder
 
-import com.github.kiyocy24.statistics_recorder.listener.LoginListener
-import com.github.kiyocy24.statistics_recorder.listener.QuitListener
-import com.github.kiyocy24.statistics_recorder.repository.DatabaseRepository
+import com.github.kiyocy24.stat_recorder.listener.LoginListener
+import com.github.kiyocy24.stat_recorder.listener.QuitListener
+import com.github.kiyocy24.stat_recorder.repository.DatabaseRepository
 import org.bukkit.plugin.java.JavaPlugin
 
-class StatisticsRecorderPlugin : JavaPlugin() {
+class StatRecorderPlugin : JavaPlugin() {
 
     override fun onEnable() {
         // Save default config

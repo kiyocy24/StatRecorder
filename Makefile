@@ -1,4 +1,4 @@
-PLUGIN = StatisticsNotifier
+PLUGIN = StatRecorder
 
 .PHONY: build_image
 build_image:
