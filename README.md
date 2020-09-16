@@ -1,5 +1,5 @@
 # Statistics Recorder Plugin
-![Build](https://github.com/kiyocy24/StatisticsRecorder/workflows/Build/badge.svg)
+![Build](https://github.com/kiyocy24/StatRecorder/workflows/Build/badge.svg)
 
 
 **This plugin is under development.**
@@ -27,7 +27,7 @@ Right now, only the statistics are stored for items, but in the future it will b
    mysql:
      host: localhost
      port: 3306
-     database: statistics_recorder
+     database: stat_recorder
      username: minecraft
      password: password
     ```

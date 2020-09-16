@@ -1,4 +1,4 @@
-package com.github.kiyocy24.statistics_recorder.entity.view
+package com.github.kiyocy24.stat_recorder.entity.view
 
 import java.sql.Timestamp
 

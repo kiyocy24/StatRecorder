@@ -18,6 +18,9 @@
       <module name="StatisticsRecorder" target="1.8" />
       <module name="StatisticsRecorder.main" target="1.8" />
       <module name="StatisticsRecorder.test" target="1.8" />
+      <module name="StatRecorder" target="1.8" />
+      <module name="StatRecorder.main" target="1.8" />
+      <module name="StatRecorder.test" target="1.8" />
       <module name="VampirePlugin" target="1.8" />
       <module name="VampirePlugin.main" target="1.8" />
       <module name="VampirePlugin.test" target="1.8" />

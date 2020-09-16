@@ -1,8 +1,8 @@
-package com.github.kiyocy24.statistics_recorder.repository
+package com.github.kiyocy24.stat_recorder.repository
 
-import com.github.kiyocy24.statistics_recorder.entity.db.ItemLog as dbItemLog
-import com.github.kiyocy24.statistics_recorder.entity.view.ItemLog as vItemLog
-import com.github.kiyocy24.statistics_recorder.infrastructure.Database
+import com.github.kiyocy24.stat_recorder.entity.db.ItemLog as dbItemLog
+import com.github.kiyocy24.stat_recorder.entity.view.ItemLog as vItemLog
+import com.github.kiyocy24.stat_recorder.infrastructure.Database
 import java.sql.Connection
 
 class ItemLogRepository(private val conn: Connection) {
@@ -12,6 +12,8 @@ class ItemLogRepository(private val conn: Connection) {
         for(vItemLog in vItemLogs) {
             dbItemLogs.add(dbItemLog(
                     userId = vItemLog.userId,
+                    userLoginNum = vItemLog.userLoginNum,
+                    itemId = vItemLog.itemId,
                     name = vItemLog.name,
                     blockMined = vItemLog.blockMined,
                     itemBroken = vItemLog.itemBroken,

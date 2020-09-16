@@ -1,10 +1,10 @@
-package com.github.kiyocy24.statistics_recorder.listener
+package com.github.kiyocy24.stat_recorder.listener
 
-import com.github.kiyocy24.statistics_recorder.entity.view.ItemLog
-import com.github.kiyocy24.statistics_recorder.entity.view.User
-import com.github.kiyocy24.statistics_recorder.mysqlConn
-import com.github.kiyocy24.statistics_recorder.repository.ItemLogRepository
-import com.github.kiyocy24.statistics_recorder.repository.UserRepository
+import com.github.kiyocy24.stat_recorder.entity.view.ItemLog
+import com.github.kiyocy24.stat_recorder.entity.view.User
+import com.github.kiyocy24.stat_recorder.mysqlConn
+import com.github.kiyocy24.stat_recorder.repository.ItemLogRepository
+import com.github.kiyocy24.stat_recorder.repository.UserRepository
 import org.bukkit.Material
 import org.bukkit.Statistic
 import org.bukkit.event.EventHandler
@@ -28,6 +28,7 @@ object QuitListener : Listener {
 
         // Record item log
         val userId = userRepo.searchByUuid(e.player.uniqueId.toString()).id
+        val userLoginNum = e.player.getStatistic(Statistic.LEAVE_GAME)
         val itemLogs = mutableListOf<ItemLog>()
         for (m in Material.values()) {
             val blockMined = e.player.getStatistic(Statistic.MINE_BLOCK, m)
@@ -41,6 +42,8 @@ object QuitListener : Listener {
                 itemUsed > 0 || itemPickedUp > 0 || itemDropped > 0) {
                 itemLogs.add(ItemLog(
                         userId = userId,
+                        userLoginNum = userLoginNum,
+                        itemId = m.ordinal,
                         name = m.name,
                         blockMined = blockMined,
                         itemBroken = itemBroken,

@@ -1,8 +1,8 @@
-package com.github.kiyocy24.statistics_recorder.listener
+package com.github.kiyocy24.stat_recorder.listener
 
-import com.github.kiyocy24.statistics_recorder.entity.view.User
-import com.github.kiyocy24.statistics_recorder.mysqlConn
-import com.github.kiyocy24.statistics_recorder.repository.UserRepository
+import com.github.kiyocy24.stat_recorder.entity.view.User
+import com.github.kiyocy24.stat_recorder.mysqlConn
+import com.github.kiyocy24.stat_recorder.repository.UserRepository
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerLoginEvent
