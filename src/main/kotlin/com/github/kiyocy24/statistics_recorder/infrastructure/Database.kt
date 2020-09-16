@@ -76,22 +76,25 @@ class Database(private val conn: Connection) {
     inner class ItemLog {
         fun multiInsert(itemLogs: List<dbItemLog>) {
             try {
-                var sql =  "INSERT INTO item_logs (user_id, item_name, block_mined, item_broken, item_crafted, item_used, item_picked_up, item_dropped) VALUES "
+                var sql =  "INSERT INTO item_logs (user_id, user_login_num, item_id, item_name, block_mined, item_broken, item_crafted, item_used, item_picked_up, item_dropped) VALUES "
                 for (i in itemLogs.indices) {
-                    sql += "(?, ?, ?, ?, ?, ?, ?, ?),"
+                    sql += "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?),"
                 }
                 sql = sql.removeSuffix(",")
                 info("Item log size: ${itemLogs.size}")
                 val pstmt = conn.prepareStatement(sql)
                 for (i in itemLogs.indices) {
-                    pstmt.setInt(i*8+1, itemLogs[i].userId)
-                    pstmt.setString(i*8+2, itemLogs[i].name)
-                    pstmt.setInt(i*8+3, itemLogs[i].blockMined)
-                    pstmt.setInt(i*8+4, itemLogs[i].itemBroken)
-                    pstmt.setInt(i*8+5, itemLogs[i].itemCrafted)
-                    pstmt.setInt(i*8+6, itemLogs[i].itemUsed)
-                    pstmt.setInt(i*8+7, itemLogs[i].itemPickedUp)
-                    pstmt.setInt(i*8+8, itemLogs[i].itemDropped)
+                    val j = i*10
+                    pstmt.setInt(j + 1, itemLogs[i].userId)
+                    pstmt.setInt(j + 2, itemLogs[i].userLoginNum)
+                    pstmt.setInt(j + 3, itemLogs[i].itemId)
+                    pstmt.setString(j + 4, itemLogs[i].name)
+                    pstmt.setInt(j + 5, itemLogs[i].blockMined)
+                    pstmt.setInt(j+ 6, itemLogs[i].itemBroken)
+                    pstmt.setInt(j + 7, itemLogs[i].itemCrafted)
+                    pstmt.setInt(j + 8, itemLogs[i].itemUsed)
+                    pstmt.setInt(j + 9, itemLogs[i].itemPickedUp)
+                    pstmt.setInt(j + 10, itemLogs[i].itemDropped)
                 }
                 pstmt.executeUpdate()
                 pstmt.close()

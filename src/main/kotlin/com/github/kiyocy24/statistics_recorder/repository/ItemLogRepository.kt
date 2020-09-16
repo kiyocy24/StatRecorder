@@ -12,6 +12,8 @@ class ItemLogRepository(private val conn: Connection) {
         for(vItemLog in vItemLogs) {
             dbItemLogs.add(dbItemLog(
                     userId = vItemLog.userId,
+                    userLoginNum = vItemLog.userLoginNum,
+                    itemId = vItemLog.itemId,
                     name = vItemLog.name,
                     blockMined = vItemLog.blockMined,
                     itemBroken = vItemLog.itemBroken,
