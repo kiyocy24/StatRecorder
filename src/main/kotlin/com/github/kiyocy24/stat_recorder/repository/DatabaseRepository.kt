@@ -1,6 +1,6 @@
-package com.github.kiyocy24.statistics_recorder.repository
+package com.github.kiyocy24.stat_recorder.repository
 
-import com.github.kiyocy24.statistics_recorder.infrastructure.Database
+import com.github.kiyocy24.stat_recorder.infrastructure.Database
 import java.sql.Connection
 
 class DatabaseRepository(private val conn: Connection) {
