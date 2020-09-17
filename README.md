@@ -17,9 +17,9 @@ Right now, only the statistics are stored for items, but in the future it will b
     1. Install mysql
     2. Create a database and user for this plugin (Database name and user name can be decided freely)
         ```bash:mysql
-       CREATE DATABASE statistics_recorder;
-       CREATE USER minecraft@localhost IDENTIFIED BY 'password';
-       GRANT ALL ON statistics_recorder.* TO minecraft@localhost;
+       CREATE DATABASE stat_recorder;
+       CREATE USER minecraft@localhost IDENTIFIED by 'password';
+       GRANT ALL ON stat_recorder.* TO minecraft@localhost;
         ``` 
 2. Place this plugin int `plugins` folder of your Minecraft server directory and start Minecraft server.
 3. Set up each item in the `config.yml` file

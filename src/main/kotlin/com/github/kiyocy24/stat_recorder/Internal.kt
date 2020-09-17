@@ -19,7 +19,6 @@ val mysqlConn : Connection by lazy {
     val username = pluginInstance.config.getString("mysql.username")
     val password = pluginInstance.config.getString("mysql.password")
 
-    info("jdbc:mysql://$host:$port/$database?autoReconnect=true&useSSL=false")
     val conn = try {
         DriverManager.getConnection(
                 "jdbc:mysql://$host:$port/$database?autoReconnect=true&useSSL=false",
