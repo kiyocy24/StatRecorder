@@ -1,0 +1,91 @@
+package com.github.kiyocy24.stat_recorder.repository
+
+import com.github.kiyocy24.stat_recorder.entity.db.CustomLog as dbCustomLog
+import com.github.kiyocy24.stat_recorder.entity.view.CustomLog as vCustomLog
+import com.github.kiyocy24.stat_recorder.infrastructure.Database
+import java.sql.Connection
+
+class CustomLogRepository(private val conn: Connection) {
+    private val db = Database(conn).CustomLog()
+    fun insert(vCustomLog: vCustomLog) {
+        val dbCustomLog = dbCustomLog(
+                userId = vCustomLog.userId,
+                damageDealt = vCustomLog.damageDealt,
+                damageTaken = vCustomLog.damageTaken,
+                deaths = vCustomLog.deaths,
+                mobKills = vCustomLog.mobKills,
+                playerKills = vCustomLog.playerKills,
+                fishCaught = vCustomLog.fishCaught,
+                animalsBred = vCustomLog.animalsBred,
+                leaveGame = vCustomLog.leaveGame,
+                jump = vCustomLog.jump,
+                dropCount = vCustomLog.dropCount,
+
+                playOneMinute = vCustomLog.playOneMinute,
+                walkOneCm = vCustomLog.walkOneCm,
+                walkOnWaterOneCm = vCustomLog.walkOnWaterOneCm,
+                fallOneCm = vCustomLog.fallOneCm,
+                sneakTime = vCustomLog.sneakTime,
+                climbOneCm = vCustomLog.climbOneCm,
+                flyOneCm = vCustomLog.flyOneCm,
+                walkUnderWaterOneCm = vCustomLog.walkUnderWaterOneCm,
+                minecartOneCm = vCustomLog.minecartOneCm,
+                boatOneCm = vCustomLog.boatOneCm,
+                pigOneCm = vCustomLog.pigOneCm,
+                horseOneCm = vCustomLog.horseOneCm,
+                sprIntOneCm = vCustomLog.sprIntOneCm,
+                crouchOneCm = vCustomLog.crouchOneCm,
+                aviateOneCm = vCustomLog.aviateOneCm,
+                timeSinceDeath = vCustomLog.timeSinceDeath,
+                talkedToVillager = vCustomLog.talkedToVillager,
+                tradedWithVillager = vCustomLog.tradedWithVillager,
+                cakeSlicesEaten = vCustomLog.cakeSlicesEaten,
+                cauldronFilled = vCustomLog.cauldronFilled,
+                cauldronUsed = vCustomLog.cauldronUsed,
+                armorCleaned = vCustomLog.armorCleaned,
+                bannerCleaned = vCustomLog.bannerCleaned,
+                brewingstandInteraction = vCustomLog.brewingstandInteraction,
+                beaconInteraction = vCustomLog.beaconInteraction,
+                dropperInspected = vCustomLog.dropperInspected,
+                hopperInspected = vCustomLog.hopperInspected,
+                dispenserInspected = vCustomLog.dispenserInspected,
+                noteblockPlayed = vCustomLog.noteblockPlayed,
+                noteblockTuned = vCustomLog.noteblockTuned,
+                flowerPotted = vCustomLog.flowerPotted,
+                trappedChestTriggered = vCustomLog.trappedChestTriggered,
+                enderchestOpened = vCustomLog.enderchestOpened,
+                itemEnchanted = vCustomLog.itemEnchanted,
+                recordPlayed = vCustomLog.recordPlayed,
+                furnaceInteraction = vCustomLog.furnaceInteraction,
+                craftingTableInteraction = vCustomLog.craftingTableInteraction,
+                chestOpened = vCustomLog.chestOpened,
+                sleepInBed = vCustomLog.sleepInBed,
+                shulkerBoxOpened = vCustomLog.shulkerBoxOpened,
+                timeSinceRest = vCustomLog.timeSinceRest,
+                swimOneCm = vCustomLog.swimOneCm,
+                damageDealtAbsorbed = vCustomLog.damageDealtAbsorbed,
+                damageDealtResisted = vCustomLog.damageDealtResisted,
+                damageBlockedByShield = vCustomLog.damageBlockedByShield,
+                damageAbsorbed = vCustomLog.damageAbsorbed,
+                damageResisted = vCustomLog.damageResisted,
+                cleanShulkerBox = vCustomLog.cleanShulkerBox,
+                openBarrel = vCustomLog.openBarrel,
+                interactWithBlastFurnace = vCustomLog.interactWithBlastFurnace,
+                interactWithSmoker = vCustomLog.interactWithSmoker,
+                interactWithLectern = vCustomLog.interactWithLectern,
+                interactWithCampfire = vCustomLog.interactWithCampfire,
+                interactWithCartographyTable = vCustomLog.interactWithCartographyTable,
+                interactWithLoom = vCustomLog.interactWithLoom,
+                interactWithStonecutter = vCustomLog.interactWithStonecutter,
+                bellRing = vCustomLog.bellRing,
+                raidTrigger = vCustomLog.raidTrigger,
+                raidWin = vCustomLog.raidWin,
+                interactWithAnvil = vCustomLog.interactWithAnvil,
+                interactWithGrindstone = vCustomLog.interactWithGrindstone,
+                targetHit = vCustomLog.targetHit,
+                interactWithSmithingTable = vCustomLog.interactWithSmithingTable,
+                striderOneCm = vCustomLog.striderOneCm
+        )
+        db.insert(dbCustomLog)
+    }
+}
