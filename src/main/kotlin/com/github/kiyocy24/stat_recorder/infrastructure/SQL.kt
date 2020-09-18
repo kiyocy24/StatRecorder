@@ -108,9 +108,53 @@ CREATE TABLE IF NOT EXISTS `custom_logs` (
   `target_hit` int NOT NULL,
   `interact_with_smithing_table` int NOT NULL,
   `strider_one_cm` int NOT NULL,
-  
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 """
+
+const val KILL_COLUMN = """ (
+  `id` int PRIMARY KEY AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `user_login_num` int NOT NULL,
+  `bat` int NOT NULL,
+  `blaze` int NOT NULL,
+  `caveSpider` int NOT NULL,
+  `chicken` int NOT NULL,
+  `cow` int NOT NULL,
+  `creeper` int NOT NULL,
+  `drowned` int NOT NULL,
+  `enderman` int NOT NULL,
+  `endermite` int NOT NULL,
+  `ghast` int NOT NULL,
+  `husk` int NOT NULL,
+  `MagmaCube` int NOT NULL,
+  `phantom` int NOT NULL,
+  `pig` int NOT NULL,
+  `piglin` int NOT NULL,
+  `pillager` int NOT NULL,
+  `sheep` int NOT NULL,
+  `shulker` int NOT NULL,
+  `silverfish` int NOT NULL,
+  `skeleton` int NOT NULL,
+  `slime` int NOT NULL,
+  `snowman` int NOT NULL,
+  `spider` int NOT NULL,
+  `squid` int NOT NULL,
+  `villager` int NOT NULL,
+  `witch` int NOT NULL,
+  `wither` int NOT NULL,
+  `wither_skelton` int NOT NULL,
+  `wolf` int NOT NULL,
+  `zombie` int NOT NULL,
+  `zombieVillager` int NOT NULL,
+  `zombie_piglin` int NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+"""
+
+const val CREATE_KILL_LOGS = "CREATE TABLE IF NOT EXISTS `kill_logs` $KILL_COLUMN"
+const val KILLED_LOGS_TABLE = "CREATE TABLE IF NOT EXISTS `killed_logs` $KILL_COLUMN"
