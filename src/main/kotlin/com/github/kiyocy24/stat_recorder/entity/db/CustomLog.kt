@@ -79,7 +79,6 @@ class CustomLog(
         val targetHit: Int = 0,
         val interactWithSmithingTable: Int = 0,
         val striderOneCm: Int = 0,
-
         val createdAt: Timestamp = Timestamp(0),
         val updatedAt: Timestamp = Timestamp(0)
 ) {}

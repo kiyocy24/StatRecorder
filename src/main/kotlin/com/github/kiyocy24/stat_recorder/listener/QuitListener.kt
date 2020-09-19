@@ -2,13 +2,16 @@ package com.github.kiyocy24.stat_recorder.listener
 
 import com.github.kiyocy24.stat_recorder.entity.view.CustomLog
 import com.github.kiyocy24.stat_recorder.entity.view.ItemLog
+import com.github.kiyocy24.stat_recorder.entity.view.KillLog
 import com.github.kiyocy24.stat_recorder.entity.view.User
 import com.github.kiyocy24.stat_recorder.mysqlConn
 import com.github.kiyocy24.stat_recorder.repository.CustomLogRepository
 import com.github.kiyocy24.stat_recorder.repository.ItemLogRepository
+import com.github.kiyocy24.stat_recorder.repository.KillLogRepository
 import com.github.kiyocy24.stat_recorder.repository.UserRepository
 import org.bukkit.Material
 import org.bukkit.Statistic
+import org.bukkit.entity.EntityType
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
@@ -19,13 +22,17 @@ object QuitListener : Listener {
     private val userRepo = UserRepository(mysqlConn)
     private val itemLogRepo = ItemLogRepository(mysqlConn)
     private val customLogRepo = CustomLogRepository(mysqlConn)
+    private val killLogRepo = KillLogRepository(mysqlConn)
 
     @EventHandler
     fun onPlayerQuitEvent(e: PlayerQuitEvent) {
         recordUserLog(e.player)
         recordItemLog(e.player)
         recordCustomLog(e.player)
+        recordKillLog(e.player)
+        recordKilledLog(e.player)
     }
+
     private fun recordUserLog(player: Player) {
         val user = User(
                 uuid = player.uniqueId.toString(),
@@ -148,5 +155,87 @@ object QuitListener : Listener {
                 striderOneCm = player.getStatistic(Statistic.STRIDER_ONE_CM)
         )
         customLogRepo.insert(customLog)
+    }
+
+    private fun recordKillLog(player: Player) {
+        val userId = userRepo.searchByUuid(player.uniqueId.toString()).id
+        val killLog = KillLog(
+                userId = userId,
+                userLoginNum = player.getStatistic(Statistic.LEAVE_GAME),
+                bat = player.getStatistic(Statistic.KILL_ENTITY, EntityType.BAT),
+                blaze = player.getStatistic(Statistic.KILL_ENTITY, EntityType.BLAZE),
+                caveSpider = player.getStatistic(Statistic.KILL_ENTITY, EntityType.CAVE_SPIDER),
+                chicken = player.getStatistic(Statistic.KILL_ENTITY, EntityType.CHICKEN),
+                cow = player.getStatistic(Statistic.KILL_ENTITY, EntityType.COW),
+                creeper = player.getStatistic(Statistic.KILL_ENTITY, EntityType.CREEPER),
+                drowned = player.getStatistic(Statistic.KILL_ENTITY, EntityType.DROWNED),
+                enderman = player.getStatistic(Statistic.KILL_ENTITY, EntityType.ENDERMAN),
+                endermite = player.getStatistic(Statistic.KILL_ENTITY, EntityType.ENDERMITE),
+                ghast = player.getStatistic(Statistic.KILL_ENTITY, EntityType.GHAST),
+                husk = player.getStatistic(Statistic.KILL_ENTITY, EntityType.HUSK),
+                magmaCube = player.getStatistic(Statistic.KILL_ENTITY, EntityType.MAGMA_CUBE),
+                phantom = player.getStatistic(Statistic.KILL_ENTITY, EntityType.PHANTOM),
+                pig = player.getStatistic(Statistic.KILL_ENTITY, EntityType.PIG),
+                piglin = player.getStatistic(Statistic.KILL_ENTITY, EntityType.PIGLIN),
+                pillager = player.getStatistic(Statistic.KILL_ENTITY, EntityType.PILLAGER),
+                sheep = player.getStatistic(Statistic.KILL_ENTITY, EntityType.SHEEP),
+                shulker = player.getStatistic(Statistic.KILL_ENTITY, EntityType.SHULKER),
+                silverfish = player.getStatistic(Statistic.KILL_ENTITY, EntityType.SILVERFISH),
+                skeleton = player.getStatistic(Statistic.KILL_ENTITY, EntityType.SKELETON),
+                slime = player.getStatistic(Statistic.KILL_ENTITY, EntityType.SLIME),
+                snowman = player.getStatistic(Statistic.KILL_ENTITY, EntityType.SNOWMAN),
+                spider = player.getStatistic(Statistic.KILL_ENTITY, EntityType.SPIDER),
+                squid = player.getStatistic(Statistic.KILL_ENTITY, EntityType.SQUID),
+                villager = player.getStatistic(Statistic.KILL_ENTITY, EntityType.VILLAGER),
+                witch = player.getStatistic(Statistic.KILL_ENTITY, EntityType.WITCH),
+                wither = player.getStatistic(Statistic.KILL_ENTITY, EntityType.WITHER),
+                witherSkelton = player.getStatistic(Statistic.KILL_ENTITY, EntityType.WITHER_SKELETON),
+                wolf = player.getStatistic(Statistic.KILL_ENTITY, EntityType.WOLF),
+                zombie = player.getStatistic(Statistic.KILL_ENTITY, EntityType.ZOMBIE),
+                zombieVillager = player.getStatistic(Statistic.KILL_ENTITY, EntityType.ZOMBIE_VILLAGER),
+                zombiePiglin = player.getStatistic(Statistic.KILL_ENTITY, EntityType.ZOMBIFIED_PIGLIN)
+        )
+        killLogRepo.insert(killLog)
+    }
+
+    private fun recordKilledLog(player: Player) {
+        val userId = userRepo.searchByUuid(player.uniqueId.toString()).id
+        val killedLog = KillLog(
+                userId = userId,
+                userLoginNum = player.getStatistic(Statistic.LEAVE_GAME),
+                bat = player.getStatistic(Statistic.ENTITY_KILLED_BY, EntityType.BAT),
+                blaze = player.getStatistic(Statistic.ENTITY_KILLED_BY, EntityType.BLAZE),
+                caveSpider = player.getStatistic(Statistic.ENTITY_KILLED_BY, EntityType.CAVE_SPIDER),
+                chicken = player.getStatistic(Statistic.ENTITY_KILLED_BY, EntityType.CHICKEN),
+                cow = player.getStatistic(Statistic.ENTITY_KILLED_BY, EntityType.COW),
+                creeper = player.getStatistic(Statistic.ENTITY_KILLED_BY, EntityType.CREEPER),
+                drowned = player.getStatistic(Statistic.ENTITY_KILLED_BY, EntityType.DROWNED),
+                enderman = player.getStatistic(Statistic.ENTITY_KILLED_BY, EntityType.ENDERMAN),
+                endermite = player.getStatistic(Statistic.ENTITY_KILLED_BY, EntityType.ENDERMITE),
+                ghast = player.getStatistic(Statistic.ENTITY_KILLED_BY, EntityType.GHAST),
+                husk = player.getStatistic(Statistic.ENTITY_KILLED_BY, EntityType.HUSK),
+                magmaCube = player.getStatistic(Statistic.ENTITY_KILLED_BY, EntityType.MAGMA_CUBE),
+                phantom = player.getStatistic(Statistic.ENTITY_KILLED_BY, EntityType.PHANTOM),
+                pig = player.getStatistic(Statistic.ENTITY_KILLED_BY, EntityType.PIG),
+                piglin = player.getStatistic(Statistic.ENTITY_KILLED_BY, EntityType.PIGLIN),
+                pillager = player.getStatistic(Statistic.ENTITY_KILLED_BY, EntityType.PILLAGER),
+                sheep = player.getStatistic(Statistic.ENTITY_KILLED_BY, EntityType.SHEEP),
+                shulker = player.getStatistic(Statistic.ENTITY_KILLED_BY, EntityType.SHULKER),
+                silverfish = player.getStatistic(Statistic.ENTITY_KILLED_BY, EntityType.SILVERFISH),
+                skeleton = player.getStatistic(Statistic.ENTITY_KILLED_BY, EntityType.SKELETON),
+                slime = player.getStatistic(Statistic.ENTITY_KILLED_BY, EntityType.SLIME),
+                snowman = player.getStatistic(Statistic.ENTITY_KILLED_BY, EntityType.SNOWMAN),
+                spider = player.getStatistic(Statistic.ENTITY_KILLED_BY, EntityType.SPIDER),
+                squid = player.getStatistic(Statistic.ENTITY_KILLED_BY, EntityType.SQUID),
+                villager = player.getStatistic(Statistic.ENTITY_KILLED_BY, EntityType.VILLAGER),
+                witch = player.getStatistic(Statistic.ENTITY_KILLED_BY, EntityType.WITCH),
+                wither = player.getStatistic(Statistic.ENTITY_KILLED_BY, EntityType.WITHER),
+                witherSkelton = player.getStatistic(Statistic.ENTITY_KILLED_BY, EntityType.WITHER_SKELETON),
+                wolf = player.getStatistic(Statistic.ENTITY_KILLED_BY, EntityType.WOLF),
+                zombie = player.getStatistic(Statistic.ENTITY_KILLED_BY, EntityType.ZOMBIE),
+                zombieVillager = player.getStatistic(Statistic.ENTITY_KILLED_BY, EntityType.ZOMBIE_VILLAGER),
+                zombiePiglin = player.getStatistic(Statistic.ENTITY_KILLED_BY, EntityType.ZOMBIFIED_PIGLIN)
+        )
+        killLogRepo.insert(killedLog, isKilledLog = true)
     }
 }

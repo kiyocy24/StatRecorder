@@ -1,15 +1,15 @@
 package com.github.kiyocy24.stat_recorder.repository
 
-import com.github.kiyocy24.stat_recorder.entity.db.User as dbUser
-import com.github.kiyocy24.stat_recorder.entity.view.User as vUser
+import com.github.kiyocy24.stat_recorder.entity.db.User as DBUser
+import com.github.kiyocy24.stat_recorder.entity.view.User as ViewUser
 import com.github.kiyocy24.stat_recorder.infrastructure.Database
 import java.sql.Connection
 
 class UserRepository(private val conn: Connection) {
     private val db = Database(conn).User()
-    fun searchByUuid(uuid: String) : vUser {
+    fun searchByUuid(uuid: String) : ViewUser {
         val dbUser = db.searchByUuid(uuid)
-        return  vUser(
+        return  ViewUser(
                 id = dbUser.id,
                 uuid = dbUser.uuid,
                 name = dbUser.name,
@@ -17,20 +17,20 @@ class UserRepository(private val conn: Connection) {
         )
     }
 
-    fun insert(user: vUser) {
-        val dbUser = dbUser(
-                uuid = user.uuid,
-                name = user.name,
-                lastLogin = user.lastLogin
+    fun insert(viewUser: ViewUser) {
+        val dbUser = DBUser(
+                uuid = viewUser.uuid,
+                name = viewUser.name,
+                lastLogin = viewUser.lastLogin
         )
         db.insert(dbUser)
     }
 
-    fun update(user: vUser) {
-        val dbUser = dbUser(
-                uuid = user.uuid,
-                name = user.name,
-                lastLogin = user.lastLogin
+    fun update(viewUser: ViewUser) {
+        val dbUser = DBUser(
+                uuid = viewUser.uuid,
+                name = viewUser.name,
+                lastLogin = viewUser.lastLogin
         )
         db.update(dbUser)
     }

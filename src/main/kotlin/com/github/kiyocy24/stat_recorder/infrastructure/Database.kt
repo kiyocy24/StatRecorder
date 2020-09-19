@@ -2,24 +2,29 @@ package com.github.kiyocy24.stat_recorder.infrastructure
 
 import com.github.kiyocy24.stat_recorder.info
 import com.github.kiyocy24.stat_recorder.warning
-import com.github.kiyocy24.stat_recorder.entity.db.User as dbUser
-import com.github.kiyocy24.stat_recorder.entity.db.ItemLog as dbItemLog
-import com.github.kiyocy24.stat_recorder.entity.db.CustomLog as dbCustomLog
+import com.github.kiyocy24.stat_recorder.entity.db.User as DBUser
+import com.github.kiyocy24.stat_recorder.entity.db.ItemLog as DBItemLog
+import com.github.kiyocy24.stat_recorder.entity.db.CustomLog as DBCustomLog
+import com.github.kiyocy24.stat_recorder.entity.db.KillLog as DBKillLog
 import java.sql.Connection
 import java.sql.SQLException
 
 class Database(private val conn: Connection) {
-    fun create(sql: String) {
+    fun create() {
         try {
-            conn.prepareStatement(sql).executeUpdate()
+            conn.prepareStatement(CREATE_USERS).executeUpdate()
+            conn.prepareStatement(CREATE_ITEM_LOGS).executeUpdate()
+            conn.prepareStatement(CREATE_CUSTOM_LOGS).executeUpdate()
+            conn.prepareStatement(CREATE_KILL_LOGS).executeUpdate()
+            conn.prepareStatement(CREATE_KILLED_LOGS).executeUpdate()
         } catch (e: SQLException) {
             warning(e.message)
         }
     }
 
     inner class User {
-        fun searchByUuid(uuid: String): dbUser {
-            var user = dbUser()
+        fun searchByUuid(uuid: String): DBUser {
+            var user = DBUser()
             try {
                 val sql = "SELECT * from users WHERE uuid=?"
                 val pstmt = conn.prepareStatement(sql)
@@ -27,7 +32,7 @@ class Database(private val conn: Connection) {
                 val rs = pstmt.executeQuery()
 
                 if (rs.next()) {
-                    user = dbUser(
+                    user = DBUser(
                             id = rs.getInt("id"),
                             uuid = rs.getString("uuid"),
                             name = rs.getString("name"),
@@ -44,7 +49,7 @@ class Database(private val conn: Connection) {
             return user
         }
 
-        fun insert(u: dbUser) {
+        fun insert(u: DBUser) {
             try {
                 val sql = "INSERT INTO users (uuid, name, last_login) VALUES (?, ?, ?)"
                 val pstmt = conn.prepareStatement(sql)
@@ -58,7 +63,7 @@ class Database(private val conn: Connection) {
             }
         }
 
-        fun update(u: dbUser) {
+        fun update(u: DBUser) {
             try {
                 val sql = "UPDATE users SET name=?, last_login=? WHERE uuid = ?"
                 val pstmt = conn.prepareStatement(sql)
@@ -74,7 +79,7 @@ class Database(private val conn: Connection) {
     }
 
     inner class ItemLog {
-        fun multiInsert(itemLogs: List<dbItemLog>) {
+        fun multiInsert(itemLogs: List<DBItemLog>) {
             try {
                 var sql =  "INSERT INTO item_logs (user_id, user_login_num, item_id, item_name, block_mined, item_broken, item_crafted, item_used, item_picked_up, item_dropped) VALUES "
                 for (i in itemLogs.indices) {
@@ -105,7 +110,7 @@ class Database(private val conn: Connection) {
     }
 
     inner class CustomLog {
-        fun insert(customLog: dbCustomLog) {
+        fun insert(customLog: DBCustomLog) {
             try {
                 val sql = """
                     INSERT INTO custom_logs (
@@ -262,6 +267,91 @@ class Database(private val conn: Connection) {
                 pstmt.setInt(73, customLog.targetHit)
                 pstmt.setInt(74, customLog.interactWithSmithingTable)
                 pstmt.setInt(75, customLog.striderOneCm)
+                pstmt.executeUpdate()
+                pstmt.close()
+            } catch (e: SQLException) {
+                warning(e.message)
+            }
+        }
+    }
+
+    inner class KillLog {
+        fun insert(killLog: DBKillLog, isKilledLog: Boolean = false) {
+            val tableName = if (isKilledLog) "killed_logs" else "kill_logs"
+            try {
+                val sql = """
+                    INSERT INTO $tableName (
+                       user_id,
+                       user_login_num,
+                       bat,
+                       blaze,
+                       caveSpider,
+                       chicken,
+                       cow,
+                       creeper,
+                       drowned,
+                       enderman,
+                       endermite,
+                       ghast,
+                       husk,
+                       MagmaCube,
+                       phantom,
+                       pig,
+                       piglin,
+                       pillager,
+                       sheep,
+                       shulker,
+                       silverfish,
+                       skeleton,
+                       slime,
+                       snowman,
+                       spider,
+                       squid,
+                       villager,
+                       witch,
+                       wither,
+                       wither_skelton,
+                       wolf,
+                       zombie,
+                       zombieVillager,
+                       zombie_piglin
+                    ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+                    """.trimIndent()
+                val pstmt = conn.prepareStatement(sql)
+                pstmt.setInt(1, killLog.userId)
+                pstmt.setInt(2, killLog.userLoginNum)
+                pstmt.setInt(3, killLog.bat)
+                pstmt.setInt(4, killLog.blaze)
+                pstmt.setInt(5, killLog.caveSpider)
+                pstmt.setInt(6, killLog.chicken)
+                pstmt.setInt(7, killLog.cow)
+                pstmt.setInt(8, killLog.creeper)
+                pstmt.setInt(9, killLog.drowned)
+                pstmt.setInt(10, killLog.enderman)
+                pstmt.setInt(11, killLog.endermite)
+                pstmt.setInt(12, killLog.ghast)
+                pstmt.setInt(13, killLog.husk)
+                pstmt.setInt(14, killLog.magmaCube)
+                pstmt.setInt(15, killLog.phantom)
+                pstmt.setInt(16, killLog.pig)
+                pstmt.setInt(17, killLog.piglin)
+                pstmt.setInt(18, killLog.pillager)
+                pstmt.setInt(19, killLog.sheep)
+                pstmt.setInt(20, killLog.shulker)
+                pstmt.setInt(21, killLog.silverfish)
+                pstmt.setInt(22, killLog.skeleton)
+                pstmt.setInt(23, killLog.slime)
+                pstmt.setInt(24, killLog.snowman)
+                pstmt.setInt(25, killLog.spider)
+                pstmt.setInt(26, killLog.squid)
+                pstmt.setInt(27, killLog.villager)
+                pstmt.setInt(28, killLog.witch)
+                pstmt.setInt(29, killLog.wither)
+                pstmt.setInt(30, killLog.witherSkelton)
+                pstmt.setInt(31, killLog.wolf)
+                pstmt.setInt(32, killLog.zombie)
+                pstmt.setInt(33, killLog.zombieVillager)
+                pstmt.setInt(34, killLog.zombiePiglin)
                 pstmt.executeUpdate()
                 pstmt.close()
             } catch (e: SQLException) {
