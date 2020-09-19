@@ -3,7 +3,6 @@ package com.github.kiyocy24.stat_recorder.entity.view
 class CustomLog(
         val id: Int = 0,
         val userId: Int = 0,
-
         val damageDealt: Int = 0,
         val damageTaken: Int = 0,
         val deaths: Int = 0,
