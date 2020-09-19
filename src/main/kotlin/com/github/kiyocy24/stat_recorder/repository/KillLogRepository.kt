@@ -7,7 +7,7 @@ import java.sql.Connection
 
 class KillLogRepository(private val conn: Connection) {
     private val db = Database(conn).KillLog()
-    fun insert(viewKillLog: ViewKillLog) {
+    fun insert(viewKillLog: ViewKillLog, isKilledLog: Boolean = false) {
         val dbKillLog = DBKillLog(
                 userId = viewKillLog.userId,
                 userLoginNum = viewKillLog.userLoginNum,
@@ -44,6 +44,6 @@ class KillLogRepository(private val conn: Connection) {
                 zombieVillager = viewKillLog.zombieVillager,
                 zombiePiglin = viewKillLog.zombiePiglin
         )
-        db.insert(dbKillLog)
+        db.insert(dbKillLog, isKilledLog = isKilledLog)
     }
 }

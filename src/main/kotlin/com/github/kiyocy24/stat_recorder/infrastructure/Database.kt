@@ -10,9 +10,13 @@ import java.sql.Connection
 import java.sql.SQLException
 
 class Database(private val conn: Connection) {
-    fun create(sql: String) {
+    fun create() {
         try {
-            conn.prepareStatement(sql).executeUpdate()
+            conn.prepareStatement(CREATE_USERS).executeUpdate()
+            conn.prepareStatement(CREATE_ITEM_LOGS).executeUpdate()
+            conn.prepareStatement(CREATE_CUSTOM_LOGS).executeUpdate()
+            conn.prepareStatement(CREATE_KILL_LOGS).executeUpdate()
+            conn.prepareStatement(CREATE_KILLED_LOGS).executeUpdate()
         } catch (e: SQLException) {
             warning(e.message)
         }
@@ -272,10 +276,11 @@ class Database(private val conn: Connection) {
     }
 
     inner class KillLog {
-        fun insert(killLog: DBKillLog) {
+        fun insert(killLog: DBKillLog, isKilledLog: Boolean = false) {
+            val tableName = if (isKilledLog) "killed_logs" else "kill_logs"
             try {
                 val sql = """
-                    INSERT INTO kill_logs (
+                    INSERT INTO $tableName (
                        user_id,
                        user_login_num,
                        bat,
