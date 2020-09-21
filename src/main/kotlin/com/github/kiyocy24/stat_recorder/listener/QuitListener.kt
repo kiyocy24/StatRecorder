@@ -81,7 +81,7 @@ object QuitListener : Listener {
                 userId = userId,
                 damageDealt = player.getStatistic(Statistic.DAMAGE_DEALT),
                 damageTaken = player.getStatistic(Statistic.DAMAGE_TAKEN),
-                deaths = player.getStatistic(Statistic.DAMAGE_TAKEN),
+                deaths = player.getStatistic(Statistic.DEATHS),
                 mobKills = player.getStatistic(Statistic.MOB_KILLS),
                 playerKills = player.getStatistic(Statistic.PLAYER_KILLS),
                 fishCaught = player.getStatistic(Statistic.FISH_CAUGHT),
