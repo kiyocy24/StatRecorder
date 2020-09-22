@@ -3,7 +3,7 @@ package com.github.kiyocy24.stat_recorder.infrastructure
 const val CREATE_USERS = """
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
-  `uuid` varchar(36) NOT NULL,
+  `uuid` varchar(36) NOT NULL UNIQUE,
   `name` varchar(255) NOT NULL,
   `last_login` timestamp NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
