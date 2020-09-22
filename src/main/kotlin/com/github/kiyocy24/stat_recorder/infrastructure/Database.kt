@@ -12,11 +12,11 @@ import java.sql.SQLException
 class Database(private val conn: Connection) {
     fun create() {
         try {
-            conn.prepareStatement(CREATE_USERS).executeUpdate()
-            conn.prepareStatement(CREATE_ITEM_LOGS).executeUpdate()
-            conn.prepareStatement(CREATE_CUSTOM_LOGS).executeUpdate()
-            conn.prepareStatement(CREATE_KILL_LOGS).executeUpdate()
-            conn.prepareStatement(CREATE_KILLED_LOGS).executeUpdate()
+            conn.prepareStatement(SQL.CREATE_USERS).executeUpdate()
+            conn.prepareStatement(SQL.CREATE_ITEM_LOGS).executeUpdate()
+            conn.prepareStatement(SQL.CREATE_CUSTOM_LOGS).executeUpdate()
+            conn.prepareStatement(SQL.CREATE_KILL_LOGS).executeUpdate()
+            conn.prepareStatement(SQL.CREATE_KILLED_LOGS).executeUpdate()
         } catch (e: SQLException) {
             warning(e.message)
         }
