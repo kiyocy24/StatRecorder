@@ -1,6 +1,96 @@
 package com.github.kiyocy24.stat_recorder.infrastructure
 
-const val ITEM_LOGS_COLUMN = """ (
+const val CREATE_USERS = """
+CREATE TABLE IF NOT EXISTS `users` (
+  `id` int PRIMARY KEY AUTO_INCREMENT,
+  `uuid` varchar(36) NOT NULL UNIQUE,
+  `name` varchar(255) NOT NULL,
+  `total_block_mined` int NOT NULL,
+  `total_item_broken` int NOT NULL,
+  `total_item_crafted` int NOT NULL,
+  `total_item_used` int NOT NULL,
+  `total_item_picked_up` int NOT NULL,
+  `total_item_dropped` int NOT NULL,
+  `damage_dealt` int NOT NULL,
+  `damage_taken` int NOT NULL,
+  `deaths` int NOT NULL,
+  `mob_kills` int NOT NULL,
+  `player_kills` int NOT NULL,
+  `fish_caught` int NOT NULL,
+  `animals_bred` int NOT NULL,
+  `leave_game` int NOT NULL,
+  `jump` int NOT NULL,
+  `drop_count` int NOT NULL,
+  `play_one_minute` int NOT NULL,
+  `walk_one_cm` int NOT NULL,
+  `walk_on_water_one_cm` int NOT NULL,
+  `fall_one_cm` int NOT NULL,
+  `sneak_time` int NOT NULL,
+  `climb_one_cm` int NOT NULL,
+  `fly_one_cm` int NOT NULL,
+  `walk_under_water_one_cm` int NOT NULL,
+  `minecart_one_cm` int NOT NULL,
+  `boat_one_cm` int NOT NULL,
+  `pig_one_cm` int NOT NULL,
+  `horse_one_cm` int NOT NULL,
+  `spr_int_one_cm` int NOT NULL,
+  `crouch_one_cm` int NOT NULL,
+  `aviate_one_cm` int NOT NULL,
+  `time_since_death` int NOT NULL,
+  `talked_to_villager` int NOT NULL,
+  `traded_with_villager` int NOT NULL,
+  `cake_slices_eaten` int NOT NULL,
+  `cauldron_filled` int NOT NULL,
+  `cauldron_used` int NOT NULL,
+  `armor_cleaned` int NOT NULL,
+  `banner_cleaned` int NOT NULL,
+  `brewingstand_interaction` int NOT NULL,
+  `beacon_interaction` int NOT NULL,
+  `dropper_inspected` int NOT NULL,
+  `hopper_inspected` int NOT NULL,
+  `dispenser_inspected` int NOT NULL,
+  `noteblock_played` int NOT NULL,
+  `noteblock_tuned` int NOT NULL,
+  `flower_potted` int NOT NULL,
+  `trapped_chest_triggered` int NOT NULL,
+  `enderchest_opened` int NOT NULL,
+  `item_enchanted` int NOT NULL,
+  `record_played` int NOT NULL,
+  `furnace_interaction` int NOT NULL,
+  `crafting_table_interaction` int NOT NULL,
+  `chest_opened` int NOT NULL,
+  `sleep_in_bed` int NOT NULL,
+  `shulker_box_opened` int NOT NULL,
+  `time_since_rest` int NOT NULL,
+  `swim_one_cm` int NOT NULL,
+  `damage_dealt_absorbed` int NOT NULL,
+  `damage_dealt_resisted` int NOT NULL,
+  `damage_blocked_by_shield` int NOT NULL,
+  `damage_absorbed` int NOT NULL,
+  `damage_resisted` int NOT NULL,
+  `clean_shulker_box` int NOT NULL,
+  `open_barrel` int NOT NULL,
+  `interact_with_blast_furnace` int NOT NULL,
+  `interact_with_smoker` int NOT NULL,
+  `interact_with_lectern` int NOT NULL,
+  `interact_with_campfire` int NOT NULL,
+  `interact_with_cartography_table` int NOT NULL,
+  `interact_with_loom` int NOT NULL,
+  `interact_with_stonecutter` int NOT NULL,
+  `bell_ring` int NOT NULL,
+  `raid_trigger` int NOT NULL,
+  `raid_win` int NOT NULL,
+  `interact_with_anvil` int NOT NULL,
+  `interact_with_grindstone` int NOT NULL,
+  `target_hit` int NOT NULL,
+  `interact_with_smithing_table` int NOT NULL,
+  `strider_one_cm` int NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+"""
+
+const val ITEM_LOGS_COLUMN = """
   `id` int PRIMARY KEY AUTO_INCREMENT,
   `user_id` int NOT NULL,
   `user_login_num` int NOT NULL,
@@ -15,10 +105,13 @@ const val ITEM_LOGS_COLUMN = """ (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 """
 
-const val CUSTOM_LOGS_COLUMN = """ (
+const val CREATE_ITEM_LOGS = "CREATE TABLE IF NOT EXISTS `item_logs` ( $ITEM_LOGS_COLUMN ) ENGINE=InnoDB DEFAULT CHARSET=utf8;"
+const val CREATE_DELTA_ITEM_LOGS = "CREATE TABLE IF NOT EXISTS `delta_item_logs` ( $ITEM_LOGS_COLUMN ) ENGINE=InnoDB DEFAULT CHARSET=utf8;"
+
+const val CREATE_CUSTOM_LOGS = """
+CREATE TABLE IF NOT EXISTS `custom_logs` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
   `user_id` int NOT NULL,
   `damage_dealt` int NOT NULL,
@@ -101,7 +194,7 @@ const val CUSTOM_LOGS_COLUMN = """ (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 """
 
-const val KILL_LOGS_COLUMN = """ (
+const val KILL_COLUMN = """
   `id` int PRIMARY KEY AUTO_INCREMENT,
   `user_id` int NOT NULL,
   `user_login_num` int NOT NULL,
@@ -140,24 +233,7 @@ const val KILL_LOGS_COLUMN = """ (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 """
 
-const val CREATE_USERS = """
-CREATE TABLE IF NOT EXISTS `users` (
-  `id` int PRIMARY KEY AUTO_INCREMENT,
-  `uuid` varchar(36) NOT NULL UNIQUE,
-  `name` varchar(255) NOT NULL,
-  `last_login` timestamp NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-"""
-const val CREATE_ITEM_LOGS = "CREATE TABLE IF NOT EXISTS `item_logs` $ITEM_LOGS_COLUMN"
-const val CREATE_CUSTOM_LOGS = "CREATE TABLE IF NOT EXISTS `custom_logs` $CUSTOM_LOGS_COLUMN"
-const val CREATE_KILL_LOGS = "CREATE TABLE IF NOT EXISTS `kill_logs` $KILL_LOGS_COLUMN"
-const val CREATE_KILLED_LOGS = "CREATE TABLE IF NOT EXISTS `killed_logs` $KILL_LOGS_COLUMN"
-const val CREATE_STAT_ITEM = "CREATE TABLE IF NOT EXISTS `stat_item` $ITEM_LOGS_COLUMN"
-const val CREATE_STAT_CUSTOM = "CREATE TABLE IF NOT EXISTS `stat_custom` $CUSTOM_LOGS_COLUMN"
-const val CREATE_STAT_KILL = "CREATE TABLE IF NOT EXISTS `stat_kill` $KILL_LOGS_COLUMN"
-const val CREATE_STAT_KILLED = "CREATE TABLE IF NOT EXISTS `stat_killed` $KILL_LOGS_COLUMN"
+const val CREATE_KILL_LOGS = "CREATE TABLE IF NOT EXISTS `kill_logs` ( $KILL_COLUMN ) ENGINE=InnoDB DEFAULT CHARSET=utf8;"
+const val CREATE_KILLED_LOGS = "CREATE TABLE IF NOT EXISTS `killed_logs` ( $KILL_COLUMN ) ENGINE=InnoDB DEFAULT CHARSET=utf8;"
