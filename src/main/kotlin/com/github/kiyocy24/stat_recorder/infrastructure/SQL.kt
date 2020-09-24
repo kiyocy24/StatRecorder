@@ -1,18 +1,6 @@
 package com.github.kiyocy24.stat_recorder.infrastructure
 
-const val CREATE_USERS = """
-CREATE TABLE IF NOT EXISTS `users` (
-  `id` int PRIMARY KEY AUTO_INCREMENT,
-  `uuid` varchar(36) NOT NULL UNIQUE,
-  `name` varchar(255) NOT NULL,
-  `last_login` timestamp NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-"""
-
-const val CREATE_ITEM_LOGS = """
-CREATE TABLE IF NOT EXISTS `item_logs` (
+const val ITEM_LOGS_COLUMN = """ (
   `id` int PRIMARY KEY AUTO_INCREMENT,
   `user_id` int NOT NULL,
   `user_login_num` int NOT NULL,
@@ -30,8 +18,7 @@ CREATE TABLE IF NOT EXISTS `item_logs` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 """
 
-const val CREATE_CUSTOM_LOGS = """
-CREATE TABLE IF NOT EXISTS `custom_logs` (
+const val CUSTOM_LOGS_COLUMN = """ (
   `id` int PRIMARY KEY AUTO_INCREMENT,
   `user_id` int NOT NULL,
   `damage_dealt` int NOT NULL,
@@ -114,7 +101,7 @@ CREATE TABLE IF NOT EXISTS `custom_logs` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 """
 
-const val KILL_COLUMN = """ (
+const val KILL_LOGS_COLUMN = """ (
   `id` int PRIMARY KEY AUTO_INCREMENT,
   `user_id` int NOT NULL,
   `user_login_num` int NOT NULL,
@@ -156,5 +143,21 @@ const val KILL_COLUMN = """ (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 """
 
-const val CREATE_KILL_LOGS = "CREATE TABLE IF NOT EXISTS `kill_logs` $KILL_COLUMN"
-const val CREATE_KILLED_LOGS = "CREATE TABLE IF NOT EXISTS `killed_logs` $KILL_COLUMN"
+const val CREATE_USERS = """
+CREATE TABLE IF NOT EXISTS `users` (
+  `id` int PRIMARY KEY AUTO_INCREMENT,
+  `uuid` varchar(36) NOT NULL UNIQUE,
+  `name` varchar(255) NOT NULL,
+  `last_login` timestamp NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+"""
+const val CREATE_ITEM_LOGS = "CREATE TABLE IF NOT EXISTS `item_logs` $ITEM_LOGS_COLUMN"
+const val CREATE_CUSTOM_LOGS = "CREATE TABLE IF NOT EXISTS `custom_logs` $CUSTOM_LOGS_COLUMN"
+const val CREATE_KILL_LOGS = "CREATE TABLE IF NOT EXISTS `kill_logs` $KILL_LOGS_COLUMN"
+const val CREATE_KILLED_LOGS = "CREATE TABLE IF NOT EXISTS `killed_logs` $KILL_LOGS_COLUMN"
+const val CREATE_STAT_ITEM = "CREATE TABLE IF NOT EXISTS `stat_item` $ITEM_LOGS_COLUMN"
+const val CREATE_STAT_CUSTOM = "CREATE TABLE IF NOT EXISTS `stat_custom` $CUSTOM_LOGS_COLUMN"
+const val CREATE_STAT_KILL = "CREATE TABLE IF NOT EXISTS `stat_kill` $KILL_LOGS_COLUMN"
+const val CREATE_STAT_KILLED = "CREATE TABLE IF NOT EXISTS `stat_killed` $KILL_LOGS_COLUMN"
