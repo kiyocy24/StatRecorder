@@ -15,7 +15,7 @@ class User(
         val blockMined: Int = 0,
         val itemBroken: Int = 0,
         val itemCrafted: Int = 0,
-        val iemUsed: Int = 0,
+        val itemUsed: Int = 0,
         val itemPickedUp: Int = 0,
         val itemDropped: Int = 0,
 ) {
@@ -30,7 +30,7 @@ class User(
                 blockMined = this.blockMined,
                 itemBroken = this.itemBroken,
                 itemCrafted = this.itemCrafted,
-                itemUsed = this.iemUsed,
+                itemUsed = this.itemUsed,
                 itemPickedUp = this.itemPickedUp,
                 itemDropped = this.itemDropped,
         )

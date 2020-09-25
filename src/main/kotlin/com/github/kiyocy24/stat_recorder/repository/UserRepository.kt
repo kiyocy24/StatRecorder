@@ -9,7 +9,7 @@ class UserRepository(private val conn: Connection) {
     private val db = Database(conn).User()
     fun searchByUuid(uuid: String) : ViewUser {
         val dbUser = db.searchByUuid(uuid)
-        return  dbUserToViewUser(dbUser)
+        return  toViewUser(dbUser)
     }
 
     fun insert(viewUser: ViewUser) {
@@ -20,7 +20,7 @@ class UserRepository(private val conn: Connection) {
         db.update(viewUser.toDBUser())
     }
 
-    private fun dbUserToViewUser(user: DBUser) : ViewUser {
+    private fun toViewUser(user: DBUser) : ViewUser {
         return ViewUser(
                 id = user.id,
                 uuid = user.uuid,
@@ -31,7 +31,7 @@ class UserRepository(private val conn: Connection) {
                 blockMined = user.blockMined,
                 itemBroken = user.itemBroken,
                 itemCrafted = user.itemCrafted,
-                iemUsed = user.itemUsed,
+                itemUsed = user.itemUsed,
                 itemPickedUp = user.itemPickedUp,
                 itemDropped = user.itemDropped,
         )

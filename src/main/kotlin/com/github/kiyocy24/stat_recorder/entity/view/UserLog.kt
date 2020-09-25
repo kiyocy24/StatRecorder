@@ -1,6 +1,4 @@
-package com.github.kiyocy24.stat_recorder.entity.db
-
-import java.sql.Timestamp
+package com.github.kiyocy24.stat_recorder.entity.view
 
 class UserLog (
         val id: Int = 0,
@@ -14,8 +12,5 @@ class UserLog (
         val itemCrafted: Int = 0,
         val itemUsed: Int = 0,
         val itemPickedUp: Int = 0,
-        val itemDropped: Int = 0,
-
-        val createdAt: Timestamp = Timestamp(0),
-        val updatedAt: Timestamp = Timestamp(0)
+        val itemDropped: Int = 0
 ) {}

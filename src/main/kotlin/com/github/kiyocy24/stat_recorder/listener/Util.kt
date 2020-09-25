@@ -20,13 +20,13 @@ class Util {
                 blockMined = totalItemLog.blockMined,
                 itemBroken = totalItemLog.itemBroken,
                 itemCrafted = totalItemLog.itemCrafted,
-                iemUsed = totalItemLog.itemUsed,
+                itemUsed = totalItemLog.itemUsed,
                 itemPickedUp = totalItemLog.itemPickedUp,
                 itemDropped = totalItemLog.itemDropped,
         )
     }
 
-    private fun sumItemLog(player: Player) : TotalItemLog {
+    fun sumItemLog(player: Player) : TotalItemLog {
         var blockMined = 0
         var itemBroken = 0
         var itemCrafted = 0
