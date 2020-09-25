@@ -9,29 +9,31 @@ class UserRepository(private val conn: Connection) {
     private val db = Database(conn).User()
     fun searchByUuid(uuid: String) : ViewUser {
         val dbUser = db.searchByUuid(uuid)
-        return  ViewUser(
-                id = dbUser.id,
-                uuid = dbUser.uuid,
-                name = dbUser.name,
-                lastLogin = dbUser.lastLogin
-        )
+        return  dbUserToViewUser(dbUser)
     }
 
     fun insert(viewUser: ViewUser) {
-        val dbUser = DBUser(
-                uuid = viewUser.uuid,
-                name = viewUser.name,
-                lastLogin = viewUser.lastLogin
-        )
-        db.insert(dbUser)
+        db.insert(viewUser.toDBUser())
     }
 
     fun update(viewUser: ViewUser) {
-        val dbUser = DBUser(
-                uuid = viewUser.uuid,
-                name = viewUser.name,
-                lastLogin = viewUser.lastLogin
+        db.update(viewUser.toDBUser())
+    }
+
+    private fun dbUserToViewUser(user: DBUser) : ViewUser {
+        return ViewUser(
+                id = user.id,
+                uuid = user.uuid,
+                name = user.name,
+                lastLogin = user.lastLogin,
+                leaveGame = user.leaveGame,
+                playOneMinute = user.playOneMinute,
+                totalBlockMined = user.totalBlockMined,
+                totalItemBroken = user.totalItemBroken,
+                totalItemCrafted = user.totalItemCrafted,
+                totalIemUsed = user.totalItemUsed,
+                totalItemPickedUp = user.totalItemPickedUp,
+                totalItemDropped = user.totalItemDropped,
         )
-        db.update(dbUser)
     }
 }

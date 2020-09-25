@@ -34,12 +34,7 @@ object QuitListener : Listener {
     }
 
     private fun recordUserLog(player: Player) {
-        val user = User(
-                uuid = player.uniqueId.toString(),
-                name = player.name,
-                lastLogin = Timestamp(System.currentTimeMillis())
-        )
-        userRepo.update(user)
+        userRepo.update(Util().newViewUser(player = player))
     }
 
     private fun recordItemLog(player: Player) {
