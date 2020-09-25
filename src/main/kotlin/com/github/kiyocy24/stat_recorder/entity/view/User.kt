@@ -12,12 +12,12 @@ class User(
         val playOneMinute: Int = 0,
 
         // Total Item log
-        val totalBlockMined: Int = 0,
-        val totalItemBroken: Int = 0,
-        val totalItemCrafted: Int = 0,
-        val totalIemUsed: Int = 0,
-        val totalItemPickedUp: Int = 0,
-        val totalItemDropped: Int = 0,
+        val blockMined: Int = 0,
+        val itemBroken: Int = 0,
+        val itemCrafted: Int = 0,
+        val iemUsed: Int = 0,
+        val itemPickedUp: Int = 0,
+        val itemDropped: Int = 0,
 ) {
     fun toDBUser() : DBUser {
         return DBUser(
@@ -27,12 +27,12 @@ class User(
                 lastLogin = this.lastLogin,
                 leaveGame = this.leaveGame,
                 playOneMinute = this.playOneMinute,
-                totalBlockMined = this.totalBlockMined,
-                totalItemBroken = this.totalItemBroken,
-                totalItemCrafted = this.totalItemCrafted,
-                totalItemUsed = this.totalIemUsed,
-                totalItemPickedUp = this.totalItemPickedUp,
-                totalItemDropped = this.totalItemDropped,
+                blockMined = this.blockMined,
+                itemBroken = this.itemBroken,
+                itemCrafted = this.itemCrafted,
+                itemUsed = this.iemUsed,
+                itemPickedUp = this.itemPickedUp,
+                itemDropped = this.itemDropped,
         )
     }
 }

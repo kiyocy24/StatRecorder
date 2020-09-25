@@ -28,12 +28,12 @@ class UserRepository(private val conn: Connection) {
                 lastLogin = user.lastLogin,
                 leaveGame = user.leaveGame,
                 playOneMinute = user.playOneMinute,
-                totalBlockMined = user.totalBlockMined,
-                totalItemBroken = user.totalItemBroken,
-                totalItemCrafted = user.totalItemCrafted,
-                totalIemUsed = user.totalItemUsed,
-                totalItemPickedUp = user.totalItemPickedUp,
-                totalItemDropped = user.totalItemDropped,
+                blockMined = user.blockMined,
+                itemBroken = user.itemBroken,
+                itemCrafted = user.itemCrafted,
+                iemUsed = user.itemUsed,
+                itemPickedUp = user.itemPickedUp,
+                itemDropped = user.itemDropped,
         )
     }
 }

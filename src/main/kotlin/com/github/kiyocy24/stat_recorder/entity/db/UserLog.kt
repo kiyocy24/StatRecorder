@@ -2,11 +2,8 @@ package com.github.kiyocy24.stat_recorder.entity.db
 
 import java.sql.Timestamp
 
-class User(
+class UserLog (
         val id: Int = 0,
-        val uuid: String = "",
-        val name: String = "",
-        val lastLogin: Timestamp = Timestamp(0),
         val leaveGame: Int = 0,
         val playOneMinute: Int = 0,
 

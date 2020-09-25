@@ -37,12 +37,12 @@ class Database(private val conn: Connection) {
                             uuid = rs.getString("uuid"),
                             name = rs.getString("name"),
                             lastLogin = rs.getTimestamp("last_login"),
-                            totalBlockMined = rs.getInt("total_block_mined"),
-                            totalItemBroken = rs.getInt("total_item_broken"),
-                            totalItemCrafted = rs.getInt("total_item_crafted"),
-                            totalItemUsed = rs.getInt("total_item_used"),
-                            totalItemPickedUp = rs.getInt("total_item_picked_up"),
-                            totalItemDropped = rs.getInt("total_item_dropped"),
+                            blockMined = rs.getInt("total_block_mined"),
+                            itemBroken = rs.getInt("total_item_broken"),
+                            itemCrafted = rs.getInt("total_item_crafted"),
+                            itemUsed = rs.getInt("total_item_used"),
+                            itemPickedUp = rs.getInt("total_item_picked_up"),
+                            itemDropped = rs.getInt("total_item_dropped"),
                             createdAt = rs.getTimestamp("created_at"),
                             updatedAt = rs.getTimestamp("updated_at")
                     )
@@ -57,19 +57,19 @@ class Database(private val conn: Connection) {
 
         fun insert(u: DBUser) {
             try {
-                val sql = "INSERT INTO users (uuid, name, last_login, leave_game, play_one_minute, total_block_mined, total_item_broken, total_item_crafted, total_item_used, total_item_picked_up, total_item_dropped) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+                val sql = "INSERT INTO users (uuid, name, last_login, leave_game, play_one_minute, block_mined, item_broken, item_crafted, item_used, item_picked_up, item_dropped) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
                 val pstmt = conn.prepareStatement(sql)
                 pstmt.setString(1, u.uuid)
                 pstmt.setString(2, u.name)
                 pstmt.setTimestamp(3, u.lastLogin)
                 pstmt.setInt(4, u.leaveGame)
                 pstmt.setInt(5, u.playOneMinute)
-                pstmt.setInt(6, u.totalBlockMined)
-                pstmt.setInt(7, u.totalItemBroken)
-                pstmt.setInt(8, u.totalItemCrafted)
-                pstmt.setInt(9, u.totalItemUsed)
-                pstmt.setInt(10, u.totalItemPickedUp)
-                pstmt.setInt(11, u.totalItemDropped)
+                pstmt.setInt(6, u.blockMined)
+                pstmt.setInt(7, u.itemBroken)
+                pstmt.setInt(8, u.itemCrafted)
+                pstmt.setInt(9, u.itemUsed)
+                pstmt.setInt(10, u.itemPickedUp)
+                pstmt.setInt(11, u.itemDropped)
                 pstmt.executeUpdate()
                 pstmt.close()
             } catch (e: SQLException) {
@@ -79,18 +79,18 @@ class Database(private val conn: Connection) {
 
         fun update(u: DBUser) {
             try {
-                val sql = "UPDATE users SET name=?, last_login=?, leave_game=?, play_one_minute=?, total_block_mined=?, total_item_broken=?, total_item_crafted=?, total_item_used=?, total_item_picked_up=?, total_item_dropped=? WHERE uuid=?"
+                val sql = "UPDATE users SET name=?, last_login=?, leave_game=?, play_one_minute=?, block_mined=?, item_broken=?, item_crafted=?, item_used=?, item_picked_up=?, item_dropped=? WHERE uuid=?"
                 val pstmt = conn.prepareStatement(sql)
                 pstmt.setString(1, u.name)
                 pstmt.setTimestamp(2, u.lastLogin)
                 pstmt.setInt(3, u.leaveGame)
                 pstmt.setInt(4, u.playOneMinute)
-                pstmt.setInt(5, u.totalBlockMined)
-                pstmt.setInt(6, u.totalItemBroken)
-                pstmt.setInt(7, u.totalItemCrafted)
-                pstmt.setInt(8, u.totalItemUsed)
-                pstmt.setInt(9, u.totalItemPickedUp)
-                pstmt.setInt(10, u.totalItemDropped)
+                pstmt.setInt(5, u.blockMined)
+                pstmt.setInt(6, u.itemBroken)
+                pstmt.setInt(7, u.itemCrafted)
+                pstmt.setInt(8, u.itemUsed)
+                pstmt.setInt(9, u.itemPickedUp)
+                pstmt.setInt(10, u.itemDropped)
                 pstmt.setString(11, u.uuid)
                 pstmt.toString()
                 pstmt.executeUpdate()

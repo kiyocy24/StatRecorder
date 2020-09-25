@@ -17,12 +17,12 @@ class Util {
                 lastLogin = Timestamp(System.currentTimeMillis()),
                 leaveGame = player.getStatistic(Statistic.LEAVE_GAME),
                 playOneMinute = player.getStatistic(Statistic.PLAY_ONE_MINUTE),
-                totalBlockMined = totalItemLog.blockMined,
-                totalItemBroken = totalItemLog.itemBroken,
-                totalItemCrafted = totalItemLog.itemCrafted,
-                totalIemUsed = totalItemLog.itemUsed,
-                totalItemPickedUp = totalItemLog.itemPickedUp,
-                totalItemDropped = totalItemLog.itemDropped,
+                blockMined = totalItemLog.blockMined,
+                itemBroken = totalItemLog.itemBroken,
+                itemCrafted = totalItemLog.itemCrafted,
+                iemUsed = totalItemLog.itemUsed,
+                itemPickedUp = totalItemLog.itemPickedUp,
+                itemDropped = totalItemLog.itemDropped,
         )
     }
 
