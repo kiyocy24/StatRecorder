@@ -3,6 +3,7 @@ package com.github.kiyocy24.stat_recorder.infrastructure
 import com.github.kiyocy24.stat_recorder.info
 import com.github.kiyocy24.stat_recorder.warning
 import com.github.kiyocy24.stat_recorder.entity.db.User as DBUser
+import com.github.kiyocy24.stat_recorder.entity.db.UserLog as DBUserLog
 import com.github.kiyocy24.stat_recorder.entity.db.ItemLog as DBItemLog
 import com.github.kiyocy24.stat_recorder.entity.db.CustomLog as DBCustomLog
 import com.github.kiyocy24.stat_recorder.entity.db.KillLog as DBKillLog
@@ -13,6 +14,7 @@ class Database(private val conn: Connection) {
     fun create() {
         try {
             conn.prepareStatement(CREATE_USERS).executeUpdate()
+            conn.prepareStatement(CREATE_USER_LOGS).executeUpdate()
             conn.prepareStatement(CREATE_ITEM_LOGS).executeUpdate()
             conn.prepareStatement(CREATE_CUSTOM_LOGS).executeUpdate()
             conn.prepareStatement(CREATE_KILL_LOGS).executeUpdate()
@@ -37,6 +39,14 @@ class Database(private val conn: Connection) {
                             uuid = rs.getString("uuid"),
                             name = rs.getString("name"),
                             lastLogin = rs.getTimestamp("last_login"),
+                            leaveGame = rs.getInt("leave_game"),
+                            playOneMinute = rs.getInt("play_one_minute"),
+                            blockMined = rs.getInt("block_mined"),
+                            itemBroken = rs.getInt("item_broken"),
+                            itemCrafted = rs.getInt("item_crafted"),
+                            itemUsed = rs.getInt("item_used"),
+                            itemPickedUp = rs.getInt("item_picked_up"),
+                            itemDropped = rs.getInt("item_dropped"),
                             createdAt = rs.getTimestamp("created_at"),
                             updatedAt = rs.getTimestamp("updated_at")
                     )
@@ -51,11 +61,19 @@ class Database(private val conn: Connection) {
 
         fun insert(u: DBUser) {
             try {
-                val sql = "INSERT INTO users (uuid, name, last_login) VALUES (?, ?, ?)"
+                val sql = "INSERT INTO users (uuid, name, last_login, leave_game, play_one_minute, block_mined, item_broken, item_crafted, item_used, item_picked_up, item_dropped) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
                 val pstmt = conn.prepareStatement(sql)
                 pstmt.setString(1, u.uuid)
                 pstmt.setString(2, u.name)
                 pstmt.setTimestamp(3, u.lastLogin)
+                pstmt.setInt(4, u.leaveGame)
+                pstmt.setInt(5, u.playOneMinute)
+                pstmt.setInt(6, u.blockMined)
+                pstmt.setInt(7, u.itemBroken)
+                pstmt.setInt(8, u.itemCrafted)
+                pstmt.setInt(9, u.itemUsed)
+                pstmt.setInt(10, u.itemPickedUp)
+                pstmt.setInt(11, u.itemDropped)
                 pstmt.executeUpdate()
                 pstmt.close()
             } catch (e: SQLException) {
@@ -65,11 +83,41 @@ class Database(private val conn: Connection) {
 
         fun update(u: DBUser) {
             try {
-                val sql = "UPDATE users SET name=?, last_login=? WHERE uuid = ?"
+                val sql = "UPDATE users SET name=?, last_login=?, leave_game=?, play_one_minute=?, block_mined=?, item_broken=?, item_crafted=?, item_used=?, item_picked_up=?, item_dropped=? WHERE uuid=?"
                 val pstmt = conn.prepareStatement(sql)
                 pstmt.setString(1, u.name)
                 pstmt.setTimestamp(2, u.lastLogin)
-                pstmt.setString(3, u.uuid)
+                pstmt.setInt(3, u.leaveGame)
+                pstmt.setInt(4, u.playOneMinute)
+                pstmt.setInt(5, u.blockMined)
+                pstmt.setInt(6, u.itemBroken)
+                pstmt.setInt(7, u.itemCrafted)
+                pstmt.setInt(8, u.itemUsed)
+                pstmt.setInt(9, u.itemPickedUp)
+                pstmt.setInt(10, u.itemDropped)
+                pstmt.setString(11, u.uuid)
+                pstmt.executeUpdate()
+                pstmt.close()
+            } catch (e: SQLException) {
+                warning(e.message)
+            }
+        }
+    }
+
+    inner class UserLog {
+        fun insert(userLog: DBUserLog) {
+            try {
+                val sql = "INSERT INTO user_logs (user_id, leave_game, play_one_minute, block_mined, item_broken, item_crafted, item_used, item_picked_up, item_dropped) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)"
+                val pstmt = conn.prepareStatement(sql)
+                pstmt.setInt(1, userLog.userId)
+                pstmt.setInt(2, userLog.leaveGame)
+                pstmt.setInt(3, userLog.playOneMinute)
+                pstmt.setInt(4, userLog.blockMined)
+                pstmt.setInt(5, userLog.itemBroken)
+                pstmt.setInt(6, userLog.itemCrafted)
+                pstmt.setInt(7, userLog.itemUsed)
+                pstmt.setInt(8, userLog.itemPickedUp)
+                pstmt.setInt(9, userLog.itemDropped)
                 pstmt.executeUpdate()
                 pstmt.close()
             } catch (e: SQLException) {

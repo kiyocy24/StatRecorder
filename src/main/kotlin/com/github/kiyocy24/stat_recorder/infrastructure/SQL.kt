@@ -6,13 +6,39 @@ CREATE TABLE IF NOT EXISTS `users` (
   `uuid` varchar(36) NOT NULL UNIQUE,
   `name` varchar(255) NOT NULL,
   `last_login` timestamp NOT NULL,
+  `leave_game` int NOT NULL,
+  `play_one_minute` int NOT NULL,
+  `block_mined` int NOT NULL,
+  `item_broken` int NOT NULL,
+  `item_crafted` int NOT NULL,
+  `item_used` int NOT NULL,
+  `item_picked_up` int NOT NULL,
+  `item_dropped` int NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 """
 
+const val CREATE_USER_LOGS = """
+CREATE TABLE IF NOT EXISTS `user_logs` (
+  `id` int PRIMARY KEY AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `leave_game` int NOT NULL,
+  `play_one_minute` int NOT NULL,
+  `block_mined` int NOT NULL,
+  `item_broken` int NOT NULL,
+  `item_crafted` int NOT NULL,
+  `item_used` int NOT NULL,
+  `item_picked_up` int NOT NULL,
+  `item_dropped` int NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+"""
+
 const val CREATE_ITEM_LOGS = """
-CREATE TABLE IF NOT EXISTS `item_logs` (
+CREATE TABLE IF NOT EXISTS `item_logs` ( 
   `id` int PRIMARY KEY AUTO_INCREMENT,
   `user_id` int NOT NULL,
   `user_login_num` int NOT NULL,
@@ -114,7 +140,7 @@ CREATE TABLE IF NOT EXISTS `custom_logs` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 """
 
-const val KILL_COLUMN = """ (
+const val KILL_COLUMN = """
   `id` int PRIMARY KEY AUTO_INCREMENT,
   `user_id` int NOT NULL,
   `user_login_num` int NOT NULL,
@@ -153,8 +179,7 @@ const val KILL_COLUMN = """ (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 """
 
-const val CREATE_KILL_LOGS = "CREATE TABLE IF NOT EXISTS `kill_logs` $KILL_COLUMN"
-const val CREATE_KILLED_LOGS = "CREATE TABLE IF NOT EXISTS `killed_logs` $KILL_COLUMN"
+const val CREATE_KILL_LOGS = "CREATE TABLE IF NOT EXISTS `kill_logs` ( $KILL_COLUMN ) ENGINE=InnoDB DEFAULT CHARSET=utf8;"
+const val CREATE_KILLED_LOGS = "CREATE TABLE IF NOT EXISTS `killed_logs` ( $KILL_COLUMN ) ENGINE=InnoDB DEFAULT CHARSET=utf8;"
