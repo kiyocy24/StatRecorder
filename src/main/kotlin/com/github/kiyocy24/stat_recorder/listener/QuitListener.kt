@@ -1,14 +1,8 @@
 package com.github.kiyocy24.stat_recorder.listener
 
-import com.github.kiyocy24.stat_recorder.entity.view.CustomLog
-import com.github.kiyocy24.stat_recorder.entity.view.ItemLog
-import com.github.kiyocy24.stat_recorder.entity.view.KillLog
-import com.github.kiyocy24.stat_recorder.entity.view.User
+import com.github.kiyocy24.stat_recorder.entity.view.*
 import com.github.kiyocy24.stat_recorder.mysqlConn
-import com.github.kiyocy24.stat_recorder.repository.CustomLogRepository
-import com.github.kiyocy24.stat_recorder.repository.ItemLogRepository
-import com.github.kiyocy24.stat_recorder.repository.KillLogRepository
-import com.github.kiyocy24.stat_recorder.repository.UserRepository
+import com.github.kiyocy24.stat_recorder.repository.*
 import org.bukkit.Material
 import org.bukkit.Statistic
 import org.bukkit.entity.EntityType
@@ -16,34 +10,50 @@ import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerQuitEvent
-import java.sql.Timestamp
 
 object QuitListener : Listener {
     private val userRepo = UserRepository(mysqlConn)
+    private val userLogRepo = UserLogRepository(mysqlConn)
     private val itemLogRepo = ItemLogRepository(mysqlConn)
     private val customLogRepo = CustomLogRepository(mysqlConn)
     private val killLogRepo = KillLogRepository(mysqlConn)
 
     @EventHandler
     fun onPlayerQuitEvent(e: PlayerQuitEvent) {
-        recordUserLog(e.player)
-        recordItemLog(e.player)
-        recordCustomLog(e.player)
-        recordKillLog(e.player)
-        recordKilledLog(e.player)
+        val user = userRepo.searchByUuid(e.player.uniqueId.toString())
+        if (user.id == 0) {
+            return
+        }
+
+        recordUser(e.player)
+        recordUserLog(e.player, user)
+        recordItemLog(e.player, user.id)
+        recordCustomLog(e.player, user.id)
+        recordKillLog(e.player, user.id)
+        recordKilledLog(e.player, user.id)
     }
 
-    private fun recordUserLog(player: Player) {
-        val user = User(
-                uuid = player.uniqueId.toString(),
-                name = player.name,
-                lastLogin = Timestamp(System.currentTimeMillis())
+    private fun recordUser(player: Player) {
+        userRepo.update(Util().newViewUser(player = player))
+    }
+
+    private fun recordUserLog(player: Player, previousUser: User) {
+        val totalItemLog = Util().sumItemLog(player)
+        val userLog = UserLog(
+                userId = previousUser.id,
+                leaveGame = player.getStatistic(Statistic.LEAVE_GAME),
+                playOneMinute = player.getStatistic(Statistic.PLAY_ONE_MINUTE) - previousUser.playOneMinute,
+                blockMined = totalItemLog.blockMined - previousUser.blockMined,
+                itemBroken = totalItemLog.itemBroken - previousUser.itemBroken,
+                itemCrafted = totalItemLog.itemCrafted - previousUser.itemCrafted,
+                itemUsed = totalItemLog.itemUsed - previousUser.itemUsed,
+                itemPickedUp = totalItemLog.itemPickedUp - previousUser.itemPickedUp,
+                itemDropped = totalItemLog.itemDropped - previousUser.itemDropped,
         )
-        userRepo.update(user)
+        userLogRepo.insert(userLog)
     }
 
-    private fun recordItemLog(player: Player) {
-        val userId = userRepo.searchByUuid(player.uniqueId.toString()).id
+    private fun recordItemLog(player: Player, userId: Int) {
         val userLoginNum = player.getStatistic(Statistic.LEAVE_GAME)
         val itemLogs = mutableListOf<ItemLog>()
         for (m in Material.values()) {
@@ -75,8 +85,7 @@ object QuitListener : Listener {
         }
     }
 
-    private fun recordCustomLog(player: Player) {
-        val userId = userRepo.searchByUuid(player.uniqueId.toString()).id
+    private fun recordCustomLog(player: Player, userId: Int) {
         val customLog = CustomLog(
                 userId = userId,
                 damageDealt = player.getStatistic(Statistic.DAMAGE_DEALT),
@@ -157,8 +166,7 @@ object QuitListener : Listener {
         customLogRepo.insert(customLog)
     }
 
-    private fun recordKillLog(player: Player) {
-        val userId = userRepo.searchByUuid(player.uniqueId.toString()).id
+    private fun recordKillLog(player: Player, userId: Int) {
         val killLog = KillLog(
                 userId = userId,
                 userLoginNum = player.getStatistic(Statistic.LEAVE_GAME),
@@ -198,8 +206,7 @@ object QuitListener : Listener {
         killLogRepo.insert(killLog)
     }
 
-    private fun recordKilledLog(player: Player) {
-        val userId = userRepo.searchByUuid(player.uniqueId.toString()).id
+    private fun recordKilledLog(player: Player, userId: Int) {
         val killedLog = KillLog(
                 userId = userId,
                 userLoginNum = player.getStatistic(Statistic.LEAVE_GAME),
