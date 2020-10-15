@@ -1,7 +1,6 @@
 package com.github.kiyocy24.stat_recorder.listener
 
 import com.github.kiyocy24.stat_recorder.entity.view.*
-import com.github.kiyocy24.stat_recorder.info
 import com.github.kiyocy24.stat_recorder.mysqlConn
 import com.github.kiyocy24.stat_recorder.repository.*
 import org.bukkit.Material
@@ -11,7 +10,6 @@ import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerQuitEvent
-import java.sql.Timestamp
 
 object QuitListener : Listener {
     private val userRepo = UserRepository(mysqlConn)
