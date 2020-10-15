@@ -1,6 +1,5 @@
 package com.github.kiyocy24.stat_recorder.listener
 
-import com.github.kiyocy24.stat_recorder.entity.view.User
 import com.github.kiyocy24.stat_recorder.mysqlConn
 import com.github.kiyocy24.stat_recorder.repository.UserRepository
 import org.bukkit.event.EventHandler

@@ -11,6 +11,8 @@ import java.sql.Connection
 import java.sql.SQLException
 
 class Database(private val conn: Connection) {
+    val ConnError = "08S01"
+    val DefaultRetryCount = 3
     fun create() {
         try {
             conn.prepareStatement(CREATE_USERS).executeUpdate()
@@ -27,133 +29,179 @@ class Database(private val conn: Connection) {
     inner class User {
         fun searchByUuid(uuid: String): DBUser {
             var user = DBUser()
-            try {
-                val sql = "SELECT * from users WHERE uuid=?"
-                val pstmt = conn.prepareStatement(sql)
-                pstmt.setString(1, uuid)
-                val rs = pstmt.executeQuery()
+            var completed = false
+            var retryCount = DefaultRetryCount
+            do {
+                try {
+                    val sql = "SELECT * from users WHERE uuid=?"
+                    val pstmt = conn.prepareStatement(sql)
+                    pstmt.setString(1, uuid)
+                    val rs = pstmt.executeQuery()
 
-                if (rs.next()) {
-                    user = DBUser(
-                            id = rs.getInt("id"),
-                            uuid = rs.getString("uuid"),
-                            name = rs.getString("name"),
-                            lastLogin = rs.getTimestamp("last_login"),
-                            leaveGame = rs.getInt("leave_game"),
-                            playOneMinute = rs.getInt("play_one_minute"),
-                            blockMined = rs.getInt("block_mined"),
-                            itemBroken = rs.getInt("item_broken"),
-                            itemCrafted = rs.getInt("item_crafted"),
-                            itemUsed = rs.getInt("item_used"),
-                            itemPickedUp = rs.getInt("item_picked_up"),
-                            itemDropped = rs.getInt("item_dropped"),
-                            createdAt = rs.getTimestamp("created_at"),
-                            updatedAt = rs.getTimestamp("updated_at")
-                    )
+                    if (rs.next()) {
+                        user = DBUser(
+                                id = rs.getInt("id"),
+                                uuid = rs.getString("uuid"),
+                                name = rs.getString("name"),
+                                lastLogin = rs.getTimestamp("last_login"),
+                                leaveGame = rs.getInt("leave_game"),
+                                playOneMinute = rs.getInt("play_one_minute"),
+                                blockMined = rs.getInt("block_mined"),
+                                itemBroken = rs.getInt("item_broken"),
+                                itemCrafted = rs.getInt("item_crafted"),
+                                itemUsed = rs.getInt("item_used"),
+                                itemPickedUp = rs.getInt("item_picked_up"),
+                                itemDropped = rs.getInt("item_dropped"),
+                                createdAt = rs.getTimestamp("created_at"),
+                                updatedAt = rs.getTimestamp("updated_at")
+                        )
+                    }
+                    rs.close()
+                    pstmt.close()
+                    completed = true
+                } catch (e: SQLException) {
+                    if (retryCount > 0 && e.sqlState == ConnError) {
+                        retryCount--
+                        continue
+                    }
+                    warning(e.message)
+                    completed = true
                 }
-                rs.close()
-                pstmt.close()
-            } catch (e: SQLException) {
-                warning(e.message)
-            }
+            } while (!completed)
             return user
         }
 
         fun insert(u: DBUser) {
-            try {
-                val sql = "INSERT INTO users (uuid, name, last_login, leave_game, play_one_minute, block_mined, item_broken, item_crafted, item_used, item_picked_up, item_dropped) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
-                val pstmt = conn.prepareStatement(sql)
-                pstmt.setString(1, u.uuid)
-                pstmt.setString(2, u.name)
-                pstmt.setTimestamp(3, u.lastLogin)
-                pstmt.setInt(4, u.leaveGame)
-                pstmt.setInt(5, u.playOneMinute)
-                pstmt.setInt(6, u.blockMined)
-                pstmt.setInt(7, u.itemBroken)
-                pstmt.setInt(8, u.itemCrafted)
-                pstmt.setInt(9, u.itemUsed)
-                pstmt.setInt(10, u.itemPickedUp)
-                pstmt.setInt(11, u.itemDropped)
-                pstmt.executeUpdate()
-                pstmt.close()
-            } catch (e: SQLException) {
-                warning(e.message)
-            }
+            var completed = false
+            var retryCount = DefaultRetryCount
+            do {
+                try {
+                    val sql = "INSERT INTO users (uuid, name, last_login, leave_game, play_one_minute, block_mined, item_broken, item_crafted, item_used, item_picked_up, item_dropped) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+                    val pstmt = conn.prepareStatement(sql)
+                    pstmt.setString(1, u.uuid)
+                    pstmt.setString(2, u.name)
+                    pstmt.setTimestamp(3, u.lastLogin)
+                    pstmt.setInt(4, u.leaveGame)
+                    pstmt.setInt(5, u.playOneMinute)
+                    pstmt.setInt(6, u.blockMined)
+                    pstmt.setInt(7, u.itemBroken)
+                    pstmt.setInt(8, u.itemCrafted)
+                    pstmt.setInt(9, u.itemUsed)
+                    pstmt.setInt(10, u.itemPickedUp)
+                    pstmt.setInt(11, u.itemDropped)
+                    pstmt.executeUpdate()
+                    pstmt.close()
+                } catch (e: SQLException) {
+                    if (retryCount > 0 && e.sqlState == ConnError) {
+                        retryCount--
+                        continue
+                    }
+                    warning(e.message)
+                    completed = true
+                }
+            } while (!completed)
         }
 
         fun update(u: DBUser) {
-            try {
-                val sql = "UPDATE users SET name=?, last_login=?, leave_game=?, play_one_minute=?, block_mined=?, item_broken=?, item_crafted=?, item_used=?, item_picked_up=?, item_dropped=? WHERE uuid=?"
-                val pstmt = conn.prepareStatement(sql)
-                pstmt.setString(1, u.name)
-                pstmt.setTimestamp(2, u.lastLogin)
-                pstmt.setInt(3, u.leaveGame)
-                pstmt.setInt(4, u.playOneMinute)
-                pstmt.setInt(5, u.blockMined)
-                pstmt.setInt(6, u.itemBroken)
-                pstmt.setInt(7, u.itemCrafted)
-                pstmt.setInt(8, u.itemUsed)
-                pstmt.setInt(9, u.itemPickedUp)
-                pstmt.setInt(10, u.itemDropped)
-                pstmt.setString(11, u.uuid)
-                pstmt.executeUpdate()
-                pstmt.close()
-            } catch (e: SQLException) {
-                warning(e.message)
-            }
+            var completed = false
+            var retryCount = DefaultRetryCount
+            do {
+                try {
+                    val sql = "UPDATE users SET name=?, last_login=?, leave_game=?, play_one_minute=?, block_mined=?, item_broken=?, item_crafted=?, item_used=?, item_picked_up=?, item_dropped=? WHERE uuid=?"
+                    val pstmt = conn.prepareStatement(sql)
+                    pstmt.setString(1, u.name)
+                    pstmt.setTimestamp(2, u.lastLogin)
+                    pstmt.setInt(3, u.leaveGame)
+                    pstmt.setInt(4, u.playOneMinute)
+                    pstmt.setInt(5, u.blockMined)
+                    pstmt.setInt(6, u.itemBroken)
+                    pstmt.setInt(7, u.itemCrafted)
+                    pstmt.setInt(8, u.itemUsed)
+                    pstmt.setInt(9, u.itemPickedUp)
+                    pstmt.setInt(10, u.itemDropped)
+                    pstmt.setString(11, u.uuid)
+                    pstmt.executeUpdate()
+                    pstmt.close()
+                } catch (e: SQLException) {
+                    if (retryCount > 0 && e.sqlState == ConnError) {
+                        retryCount--
+                        continue
+                    }
+                    warning(e.message)
+                    completed = true
+                }
+            } while (!completed)
         }
     }
 
     inner class UserLog {
         fun insert(userLog: DBUserLog) {
-            try {
-                val sql = "INSERT INTO user_logs (user_id, leave_game, play_one_minute, block_mined, item_broken, item_crafted, item_used, item_picked_up, item_dropped) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)"
-                val pstmt = conn.prepareStatement(sql)
-                pstmt.setInt(1, userLog.userId)
-                pstmt.setInt(2, userLog.leaveGame)
-                pstmt.setInt(3, userLog.playOneMinute)
-                pstmt.setInt(4, userLog.blockMined)
-                pstmt.setInt(5, userLog.itemBroken)
-                pstmt.setInt(6, userLog.itemCrafted)
-                pstmt.setInt(7, userLog.itemUsed)
-                pstmt.setInt(8, userLog.itemPickedUp)
-                pstmt.setInt(9, userLog.itemDropped)
-                pstmt.executeUpdate()
-                pstmt.close()
-            } catch (e: SQLException) {
-                warning(e.message)
-            }
+            var completed = false
+            var retryCount = DefaultRetryCount
+            do {
+                try {
+                    val sql = "INSERT INTO user_logs (user_id, leave_game, play_one_minute, block_mined, item_broken, item_crafted, item_used, item_picked_up, item_dropped) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)"
+                    val pstmt = conn.prepareStatement(sql)
+                    pstmt.setInt(1, userLog.userId)
+                    pstmt.setInt(2, userLog.leaveGame)
+                    pstmt.setInt(3, userLog.playOneMinute)
+                    pstmt.setInt(4, userLog.blockMined)
+                    pstmt.setInt(5, userLog.itemBroken)
+                    pstmt.setInt(6, userLog.itemCrafted)
+                    pstmt.setInt(7, userLog.itemUsed)
+                    pstmt.setInt(8, userLog.itemPickedUp)
+                    pstmt.setInt(9, userLog.itemDropped)
+                    pstmt.executeUpdate()
+                    pstmt.close()
+                } catch (e: SQLException) {
+                    if (retryCount > 0 && e.sqlState == ConnError) {
+                        retryCount--
+                        continue
+                    }
+                    warning(e.message)
+                    completed = true
+                }
+            } while (!completed)
         }
     }
 
     inner class ItemLog {
         fun multiInsert(itemLogs: List<DBItemLog>) {
-            try {
-                var sql =  "INSERT INTO item_logs (user_id, user_login_num, item_id, item_name, block_mined, item_broken, item_crafted, item_used, item_picked_up, item_dropped) VALUES "
-                for (i in itemLogs.indices) {
-                    sql += "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?),"
+            var completed = false
+            var retryCount = DefaultRetryCount
+            do {
+                try {
+                    var sql =  "INSERT INTO item_logs (user_id, user_login_num, item_id, item_name, block_mined, item_broken, item_crafted, item_used, item_picked_up, item_dropped) VALUES "
+                    for (i in itemLogs.indices) {
+                        sql += "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?),"
+                    }
+                    sql = sql.removeSuffix(",")
+                    info("Item log size: ${itemLogs.size}")
+                    val pstmt = conn.prepareStatement(sql)
+                    for (i in itemLogs.indices) {
+                        val j = i*10
+                        pstmt.setInt(j + 1, itemLogs[i].userId)
+                        pstmt.setInt(j + 2, itemLogs[i].userLoginNum)
+                        pstmt.setInt(j + 3, itemLogs[i].itemId)
+                        pstmt.setString(j + 4, itemLogs[i].name)
+                        pstmt.setInt(j + 5, itemLogs[i].blockMined)
+                        pstmt.setInt(j+ 6, itemLogs[i].itemBroken)
+                        pstmt.setInt(j + 7, itemLogs[i].itemCrafted)
+                        pstmt.setInt(j + 8, itemLogs[i].itemUsed)
+                        pstmt.setInt(j + 9, itemLogs[i].itemPickedUp)
+                        pstmt.setInt(j + 10, itemLogs[i].itemDropped)
+                    }
+                    pstmt.executeUpdate()
+                    pstmt.close()
+                } catch (e: SQLException) {
+                    if (retryCount > 0 && e.sqlState == ConnError) {
+                        retryCount--
+                        continue
+                    }
+                    warning(e.message)
+                    completed = true
                 }
-                sql = sql.removeSuffix(",")
-                info("Item log size: ${itemLogs.size}")
-                val pstmt = conn.prepareStatement(sql)
-                for (i in itemLogs.indices) {
-                    val j = i*10
-                    pstmt.setInt(j + 1, itemLogs[i].userId)
-                    pstmt.setInt(j + 2, itemLogs[i].userLoginNum)
-                    pstmt.setInt(j + 3, itemLogs[i].itemId)
-                    pstmt.setString(j + 4, itemLogs[i].name)
-                    pstmt.setInt(j + 5, itemLogs[i].blockMined)
-                    pstmt.setInt(j+ 6, itemLogs[i].itemBroken)
-                    pstmt.setInt(j + 7, itemLogs[i].itemCrafted)
-                    pstmt.setInt(j + 8, itemLogs[i].itemUsed)
-                    pstmt.setInt(j + 9, itemLogs[i].itemPickedUp)
-                    pstmt.setInt(j + 10, itemLogs[i].itemDropped)
-                }
-                pstmt.executeUpdate()
-                pstmt.close()
-            } catch (e: SQLException) {
-                warning(e.message)
-            }
+            } while (!completed)
         }
     }
 
